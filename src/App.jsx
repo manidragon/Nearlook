@@ -9,6 +9,8 @@ import Home from "./Pages/Home/Home.jsx";
 import Login from "./Pages/Home/Login/Login.jsx";
 import Register from "./Pages/Home/Register/Register.jsx";
 import CartPanel from "./Components/CartPanel/Cart.jsx";
+import ProductListing from "./Pages/ProductListing/ProductListing.jsx";
+import { ProductDetails } from "./Pages/ProductDetails/ProductDetails.jsx";
 
 // ✅ CREATE & EXPORT CONTEXT
 export const MyContext = createContext();
@@ -34,6 +36,8 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
+              <Route path="/productListing" element={<ProductListing />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
