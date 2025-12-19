@@ -1,11 +1,12 @@
-import React, { Suspense, lazy, memo } from "react";
+import React, { Suspense, lazy, memo, useContext } from "react";
+
 import { Link } from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Navigation from "./Navigation/navigation.jsx";
-
+import { MyContext } from "../../App";
 // icons (still from react-icons — optional: replace with inline SVGs to shrink bundle)
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoGitCompareOutline } from "react-icons/io5";
@@ -30,11 +31,12 @@ const IconWithBadge = memo(function IconWithBadge({
   ariaLabel,
   badgeContent,
   children,
+  onClick,
 }) {
   return (
     <li>
       <Tooltip title={title} arrow>
-        <IconButton aria-label={ariaLabel} size="large">
+        <IconButton aria-label={ariaLabel} size="large" onClick={onClick}>
           <StyledBadge badgeContent={badgeContent} color="secondary">
             {children}
           </StyledBadge>
@@ -45,6 +47,9 @@ const IconWithBadge = memo(function IconWithBadge({
 });
 
 const Header = () => {
+
+  const context = useContext(MyContext)
+
   return (
     <header className="bg-white">
       <div className="top-strip py-2 border-t-2 border-b-2 border-gray-200 bg-white">
@@ -89,7 +94,7 @@ const Header = () => {
                 <li className="list-none">
                   <Link
                     to="order-tracking"
-                    className="text-[13px] link font-[500] transition"
+                    className="text-[13px] link font-[500] transition" 
                   >
                     Order Tracking
                   </Link>
@@ -149,13 +154,17 @@ const Header = () => {
                 <GrFavorite size={20} aria-hidden="true" />
               </IconWithBadge>
 
-              <IconWithBadge title="Cart" ariaLabel="cart" badgeContent={4}>
+              <IconWithBadge title="Cart" ariaLabel="cart" badgeContent={4} onClick={()=>context.setOpenCartPanel(true)}>
                 <MdOutlineShoppingCart size={22} aria-hidden="true" />
               </IconWithBadge>
+          
+                      
             </ul>
           </div>
         </div>
       </div>
+
+      
 
       <Navigation />
     </header>
