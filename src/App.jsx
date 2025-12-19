@@ -47,35 +47,39 @@ function App() {
 
         {/* 🛒 Cart Panel */}
         <Drawer
-          anchor="right"
-          open={openCartPanel}
-          onClose={toggleCartPanel(false)}
-        >
-          <div style={{ width: 400, padding: 16 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 12,
-                paddingBottom: 10,
-                borderBottom: "1px solid rgba(0,0,0,0.1)",
-              }}
-            >
-              <h4 style={{ margin: 0 }}>Shopping Cart (1)</h4>
+  anchor="right"
+  open={openCartPanel}
+  onClose={toggleCartPanel(false)}
+  PaperProps={{
+    sx: {
+      width: 400, // 🔥 change width here
+    },
+  }}
+>
+  <div style={{ padding: 16 }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 12,
+        paddingBottom: 10,
+        borderBottom: "1px solid rgba(0,0,0,0.1)",
+      }}
+    >
+      <h4 style={{ margin: 0 }}>Shopping Cart (1)</h4>
 
-              <IoCloseSharp
-                size={20}
-                style={{ cursor: "pointer" }}
-                onClick={toggleCartPanel(false)}
-              />
-            </div>
+      <IoCloseSharp
+        size={20}
+        style={{ cursor: "pointer" }}
+        onClick={toggleCartPanel(false)}
+      />
+    </div>
 
-            
-          </div>
+    <CartPanel /> {/* ✅ move CartPanel inside */}
+  </div>
+</Drawer>
 
-          <CartPanel/>
-        </Drawer>
       </>
     </MyContext.Provider>
   );
