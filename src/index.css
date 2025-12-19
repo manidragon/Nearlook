@@ -1,11 +1,9 @@
 @import "tailwindcss";
-
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 
 }
+
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
@@ -33,7 +31,8 @@
   background: #fc4b03 !important;
   color: #fff !important;
   font-weight: 500;
-  font-size: medium;
+  font-size: 16px;
+  padding: 7px 20px !important;
 }
 
 .btn-org:hover {
@@ -234,3 +233,33 @@ body {
   background: #fc4b03 !important;
   color: #fff !important;
 }
+
+.btn-lg {
+  font-size: 18px;
+  padding: 10px 20px !important;
+}
+
+footer form input ::placeholder {
+  font-size: 14px;
+}
+
+footer form input::placeholder {
+  font-size: 14px;
+}
+
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color: #fc4b03 !important;
+}
+
+.MuiFormControlLabel-label {
+  font-size: 13px !important;
+  color: rgba();
+}
+
+.swiper-button-prev, .swiper-button-next {
+    svg {
+
+      height:50% ! important;
+      color: #fc4b03 !important;
+    }}

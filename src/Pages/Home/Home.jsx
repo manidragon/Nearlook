@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="homeBanner">
+      <div className="homeBanner mb-0">
         <HomeSlider />
 
         <section className="!py-6">
@@ -150,12 +150,6 @@ const Home = () => {
         </section>
       </div>
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </>
   );
 };

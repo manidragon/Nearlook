@@ -16,7 +16,7 @@ const HomeCatSlider = () => {
         <Swiper
           slidesPerView={8}
           spaceBetween={10}
-          navigation={true}
+          navigation={false}
           modules={[Navigation]}
           className="mySwiper"
         >
