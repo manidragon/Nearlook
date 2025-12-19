@@ -46,14 +46,33 @@ const IconWithBadge = memo(function IconWithBadge({
 
 const Header = () => {
   return (
-    <header>
-      <div className="top-strip py-2 border-t-2 border-b-2 border-gray-200">
+    <header className="bg-white">
+      <div className="top-strip py-2 border-t-2 border-b-2 border-gray-200 bg-white">
         <div className="container">
           <div className="flex items-center justify-between">
-            <div className="coll w-[50%]">
-              <p className="text-[14px] ">
-                Get up to 50% off new season styles, limited time
-              </p>
+            <div
+              className="elementor-element elementor-element-7740ffcb elementor-column elementor-col-50 elementor-top-column"
+              data-id="7740ffcb"
+              data-element_type="column"
+            >
+              <div className="elementor-column-wrap  elementor-element-populated">
+                <div className="elementor-widget-wrap">
+                  <div
+                    className="elementor-element elementor-element-347681e2 elementor-widget elementor-widget-text-editor"
+                    data-id="347681e2"
+                    data-element_type="widget"
+                    data-widget_type="text-editor.default"
+                  >
+                    <div className="elementor-widget-container">
+                      <div className="elementor-text-editor elementor-clearfix">
+                        <p>
+                          Get up to 50% off new season styles, limited time only
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="col2 flex items-center justify-end">
