@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 .container {
   width: 95% ; margin:auto;
 }
@@ -20,3 +16,31 @@ body {
 }
 
 .MuiBadge-badge{ background-color: #fc4b03 !important;}
+
+.btn-org {
+    background: #ff5252 !important; 
+    color: #fff !important; 
+    font-weight: 500; 
+    font-size: 16px; 
+    padding: 7px 20px !important;
+}
+
+.btn-lg {
+    font-size: 18px; 
+    padding: 10px 20px !important;
+}
+footer form input ::placeholder{font-size: 14px;}
+
+footer form input::placeholder {
+    font-size: 14px;
+}
+
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, 
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+    color: #ff5252 !important;
+}
+
+.MuiFormControlLabel-label {
+    font-size: 13px !important; 
+    color: rgba();
+}
