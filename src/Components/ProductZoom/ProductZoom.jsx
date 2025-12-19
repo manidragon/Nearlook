@@ -18,7 +18,7 @@ export const ProductZoom = () => {
       <div className="flex gap-3">
         <div className="slider w-[30%]">
           <Swiper
-          
+            direction={"vertical"}
             slidesPerView={8}
             spaceBetween={10}
             navigation={true}
