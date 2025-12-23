@@ -46,7 +46,7 @@ const IconWithBadge = memo(function IconWithBadge({
 
 const Header = () => {
   return (
-    <header>
+    <header className="shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
       <div className="top-strip py-2 border-t-2 border-b-2 border-gray-200">
         <div className="container">
           <div className="flex items-center justify-between">

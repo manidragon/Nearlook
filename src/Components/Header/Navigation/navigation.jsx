@@ -17,7 +17,7 @@ const Navigation = () => {
   return (
     <>
       <nav className="py-2">
-        <div className="container flex items-center justify-end gap-5">
+        <div className="container-fluid flex items-center justify-between gap-5">
           <div className="col1 w-[20%] ">
             <Button
               className="!text-black gap-2 w-full "
@@ -25,12 +25,12 @@ const Navigation = () => {
             >
               <RiMenu2Fill className="text-2xl" />
               Shop By Categories
-              <IoIosArrowDown className="text-2xl ml-auto justify-end cursor-pointer" />
+              <IoIosArrowDown className="text-2xl ml-auto cursor-pointer" />
             </Button>
           </div>
 
-          <div className="col2 w-[80%]">
-            <ul className="flex items-center !gap-2 nav">
+          <div className="col2 w-[80%] overflow-auto overflow-y-hidden">
+            <ul className="flex items-center justify-evenly !gap-2 nav">
               <li className="list-none mx-4">
                 <Link
                   to="/"
@@ -88,6 +88,9 @@ const Navigation = () => {
                             </Link>
                           </li>
                           <li className="py-2 list-none w-full">
+                            <div className="">
+
+                            </div>
                             <Link to="/" className="w-full block">
                               <Button className="!text-gray-600 w-full !text-left !justify-start hover:!text-[#fc4b03]">
                                 Women
