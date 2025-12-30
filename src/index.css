@@ -1,9 +1,17 @@
 @import "tailwindcss";
+
 * {
   box-sizing: border-box;
 
 }
 
+p {
+  font-size: 14px;
+  line-height: 25px;
+  margin-bottom: 10px;
+}
+
+h1,h2,h3,h4,h5,h6{font-weight: 600;}
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
@@ -74,11 +82,12 @@ body {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
 
-  margin: 0;
-  padding: 0;
+
   margin-bottom: 15px;
   margin-top: 8px;
-  background: rgb(235, 233, 233);
+  background: #f5f0f0;
+  color: #3b3b3b;
+  overflow-x: hidden;
 }
 
 /* helpers */
@@ -278,13 +287,47 @@ footer form input::placeholder {
   color: rgba();
 }
 
-.swiper-button-prev, .swiper-button-next {
-    svg {
+.swiper-button-prev,
+.swiper-button-next {
+  svg {
 
-      height:50% ! important;
-      color: #fc4b03 !important;
-    }}
+    height: 50% ! important;
+    color: #fc4b03 !important;
 
+    z-index: 50 !important;
+    /* higher than slide container */
+
+  }
+}
+
+.swiper {
+  position: relative;
+}
+
+.zoomProductSliderThumbs .swiper-slide {
+  height: auto !important;
+}
+
+.zoomProductSliderThumbs .swiper-button-next {
+  display: none;
+}
+
+.zoomProductSliderThumbs .swiper-button-prev {
+  display: none;
+}
+
+.productContent .actions button {
+  min-width: 40px !important;
+  height: 30px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 #size-menu .MuiButtonBase-root {
   font-size: 12px !important;
 }

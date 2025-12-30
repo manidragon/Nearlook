@@ -28,6 +28,14 @@ const Login = () => {
                 label="Email Id *"
                 variant="outlined"
                 className="w-full"
+                 sx={{
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "oklch(63.7% 0.237 25.331)"
+      },
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: "oklch(63.7% 0.237 25.331)"
+      }
+    }}
               />
             </div>
 
@@ -38,6 +46,14 @@ const Login = () => {
                 label="Password *"
                 variant="outlined"
                 className="w-full"
+                 sx={{
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: "oklch(63.7% 0.237 25.331)"
+      },
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: "oklch(63.7% 0.237 25.331)"
+      }
+    }}
               />
 
               <Button className="!absolute top-[10px] right-[10px] z-50 !w-[35px] !h-[35px]

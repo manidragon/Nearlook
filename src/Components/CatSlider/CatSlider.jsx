@@ -12,11 +12,11 @@ import { Link } from "react-router-dom";
 const HomeCatSlider = () => {
   return (
     <div className="homeCatSlider !py-8 !pt-4">
-      <div className="container">
+      <div className="container ">
         <Swiper
           slidesPerView={8}
           spaceBetween={10}
-          navigation={false}
+          navigation={true}
           modules={[Navigation]}
           className="mySwiper"
         >

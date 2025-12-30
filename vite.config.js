@@ -4,13 +4,18 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
-    react(),        // enables JSX + Fast Refresh
-    tailwindcss(),  // enables Tailwind
+    react(),
+    tailwindcss(),
   ],
+
+  optimizeDeps: {
+    include: ["react-inner-image-zoom"],
+  },
+
   server: {
     watch: {
       usePolling: true,
-      interval: 200,   // improves detection reliability
+      interval: 200,
     },
   },
 });
