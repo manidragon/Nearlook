@@ -1,11 +1,12 @@
-import React, { Suspense, lazy, memo } from "react";
+import React, { Suspense, lazy, memo, useContext } from "react";
+
 import { Link } from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Navigation from "./Navigation/navigation.jsx";
-
+import { MyContext } from "../../App";
 // icons (still from react-icons — optional: replace with inline SVGs to shrink bundle)
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoGitCompareOutline } from "react-icons/io5";
@@ -30,11 +31,12 @@ const IconWithBadge = memo(function IconWithBadge({
   ariaLabel,
   badgeContent,
   children,
+  onClick,
 }) {
   return (
     <li>
       <Tooltip title={title} arrow>
-        <IconButton aria-label={ariaLabel} size="large">
+        <IconButton aria-label={ariaLabel} size="large" onClick={onClick}>
           <StyledBadge badgeContent={badgeContent} color="secondary">
             {children}
           </StyledBadge>
@@ -45,15 +47,37 @@ const IconWithBadge = memo(function IconWithBadge({
 });
 
 const Header = () => {
+
+  const context = useContext(MyContext)
+
   return (
-    <header className="shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
-      <div className="top-strip py-2 border-t-2 border-b-2 border-gray-200">
+    <header className="bg-white">
+      <div className="top-strip py-2 border-t-2 border-b-2 border-gray-200 bg-white">
         <div className="container">
           <div className="flex items-center justify-between">
-            <div className="coll w-[50%]">
-              <p className="text-[14px] ">
-                Get up to 50% off new season styles, limited time
-              </p>
+            <div
+              className="elementor-element elementor-element-7740ffcb elementor-column elementor-col-50 elementor-top-column"
+              data-id="7740ffcb"
+              data-element_type="column"
+            >
+              <div className="elementor-column-wrap  elementor-element-populated">
+                <div className="elementor-widget-wrap">
+                  <div
+                    className="elementor-element elementor-element-347681e2 elementor-widget elementor-widget-text-editor"
+                    data-id="347681e2"
+                    data-element_type="widget"
+                    data-widget_type="text-editor.default"
+                  >
+                    <div className="elementor-widget-container">
+                      <div className="elementor-text-editor elementor-clearfix">
+                        <p>
+                          Get up to 50% off new season styles, limited time only
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="col2 flex items-center justify-end">
@@ -70,7 +94,7 @@ const Header = () => {
                 <li className="list-none">
                   <Link
                     to="order-tracking"
-                    className="text-[13px] link font-[500] transition"
+                    className="text-[13px] link font-[500] transition" 
                   >
                     Order Tracking
                   </Link>
@@ -130,13 +154,17 @@ const Header = () => {
                 <GrFavorite size={20} aria-hidden="true" />
               </IconWithBadge>
 
-              <IconWithBadge title="Cart" ariaLabel="cart" badgeContent={4}>
+              <IconWithBadge title="Cart" ariaLabel="cart" badgeContent={4} onClick={()=>context.setOpenCartPanel(true)}>
                 <MdOutlineShoppingCart size={22} aria-hidden="true" />
               </IconWithBadge>
+          
+                      
             </ul>
           </div>
         </div>
       </div>
+
+      
 
       <Navigation />
     </header>

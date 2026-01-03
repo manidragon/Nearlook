@@ -16,8 +16,8 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="py-2">
-        <div className="container-fluid flex items-center justify-between gap-5">
+      <nav>
+        <div className="container flex items-center justify-end gap-5">
           <div className="col1 w-[20%] ">
             <Button
               className="!text-black gap-2 w-full "

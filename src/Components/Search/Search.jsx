@@ -1,111 +1,155 @@
-import React from 'react'
-import './Style.css'
-import { GoSearch } from "react-icons/go";
-import Button from "@mui/material/Button";
+import React, { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
+import { IoIosSearch } from "react-icons/io";
 
-
+const trendingSearches = [
+  "iPhone 15",
+  "Running Shoes",
+  "Bluetooth Headphones",
+  "Smart Watch",
+  "Laptop Bag",
+  "Men T-Shirts",
+];
 
 const Search = () => {
- 
+  const [query, setQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const wrapperRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelect = (text) => {
+    setQuery(text);
+    setShowDropdown(false);
+  };
+
   return (
-    <div className="elementor-widget-wrap">
-      <div
-        className="elementor-element elementor-element-6ca596b7 elementor-widget__width-auto button-layout-text elementor-widget elementor-widget-ava-search"
-        data-id="6ca596b7"
-        data-element_type="widget"
-        data-widget_type="ava-search.default"
-      >
-        <div className="elementor-widget-container">
-          {/* Block search module TOP */}
-          <div id="avasearch_block" className="ava-search-bar">
-            <form
-              id="searchbox"
-              method="get"
-              action="https://prestashop.codezeel.com/PRS21/PRS210502/default/en/search"
-            >
-              <div className="search-category-field">
-                <select
-                  id="search_category"
-                  name="search_category"
-                  className="form-control"
-                >
-                  <option value="all">All Categories</option>
-                  <option value="3">&nbsp;&nbsp;Shop</option>
-                  <option value="4">&nbsp;&nbsp;Electronics</option>
-                  <option value="5">&nbsp;&nbsp;Furniture</option>
-                  <option value="6">&nbsp;&nbsp;Fashion &amp; Style</option>
-                  <option value="7">&nbsp;&nbsp;Cosmetic</option>
-                  <option value="8">&nbsp;&nbsp;Books &amp; Music</option>
-                  <option value="9">&nbsp;&nbsp;Groceries</option>
-                </select>
-              </div>
+    <StyledWrapper ref={wrapperRef}>
+      <div className="searchBox">
+        <input
+          className="searchInput"
+          type="text"
+          name="search"
+          placeholder="Search products"
+          value={query}
+          onFocus={() => setShowDropdown(true)}
+          onChange={(e) => setQuery(e.target.value)}
+        />
 
-              <div className="input-wrapper search-table">
-                <input type="hidden" name="controller" value="search" />
-                <input type="hidden" name="orderby" value="position" />
-                <input type="hidden" name="orderway" value="desc" />
-                <input
-                  type="hidden"
-                  value="https://prestashop.codezeel.com/PRS21/PRS210502/default/modules/avanamsearchbar/controller_ajax_search.php"
-                  className="url_ajax"
-                />
-
-                <input
-                  className="search_query query form-control"
-                  type="text"
-                  id="search_query_top"
-                  name="s"
-                  placeholder="Search product here..."
-                  defaultValue=""
-                />
-
-                <div className="icon-container">
-                  <i className="loader"></i>
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn search-button btn-primary btn-canvas"
-                >
-                  <span className="submit-text">Search</span>
-                </button>
-              </div>
-            </form>
-
-            <div className="search-dropdown">
-              <div className="popular-search">
-                <h6>Popular search terms</h6>
-                <div>
-                  <a href="searchf99c.html?search_category=all&controller=search&orderby=position&orderway=desc&s=electronics">
-                    electronics
-                  </a>
-                  <a href="search516d.html?search_category=all&controller=search&orderby=position&orderway=desc&s=clothes">
-                    clothes
-                  </a>
-                  <a href="search634c.html?search_category=all&controller=search&orderby=position&orderway=desc&s=furniture">
-                    furniture
-                  </a>
-                </div>
-              </div>
-
-              <div className="ava-search-result-container">
-                <div id="avasearch_data" className="search-content"></div>
-              </div>
-            </div>
-          </div>
-          {/* /Block search module TOP */}
-
-          <script
-            type="text/javascript"
-            dangerouslySetInnerHTML={{
-              __html:
-                "var limit_character = \"<p class='limit'>Search terms must be at least 3 characters in length.</p>\";",
-            }}
-          />
-        </div>
+        <button className="searchButton" type="button">
+          <IoIosSearch size={20} />
+        </button>
       </div>
-    </div>
+
+      {showDropdown && (
+        <div className="dropdown">
+          <p className="title">Trending Searches</p>
+          {trendingSearches
+            .filter((item) => item.toLowerCase().includes(query.toLowerCase()))
+            .map((item) => (
+              <div
+                key={item}
+                className="dropdownItem"
+                onClick={() => handleSelect(item)}
+              >
+                <IoIosSearch size={16} />
+                <span>{item}</span>
+              </div>
+            ))}
+        </div>
+      )}
+    </StyledWrapper>
   );
-}
+};
 
 export default Search;
+const StyledWrapper = styled.div`
+  position: relative;
+
+  .searchBox {
+    display: flex;
+    align-items: center;
+    background: #ebe9e9;
+    border-radius: 50px;
+    position: relative;
+  }
+
+  .searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    color: #2f3640;
+    font-size: 15px;
+    padding: 14px 40px 14px 16px;
+    width: 100%;
+  }
+
+  .searchButton {
+    color: white;
+    position: absolute;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(
+      --gradient-2,
+      linear-gradient(90deg, #fc4700ff 0%, #ca6238ff 100%)
+    );
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  } /*hover effect*/
+  button:hover {
+    color: #fff;
+    background-color: #1a1a1a;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+    transform: translateY(-3px);
+  } /*button pressing effect*/
+  button:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 110%;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    padding: 8px 0;
+  }
+
+  .title {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    color: #555;
+  }
+
+  .dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+`;

@@ -1,0 +1,11 @@
+.productItem .title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  line-height: 18px;
+}
+
+.productItem .actions button:hover {
+  background-color: #fc4b03 !important;
+  color: #fff !important;
+}
