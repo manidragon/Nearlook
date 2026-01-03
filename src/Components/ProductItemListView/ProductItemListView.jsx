@@ -68,7 +68,7 @@ const ProductItemListView = () => {
 
       {/* Info Section */}
       <div className="info !p-3 !py-5 W-[75%] !px-8">
-        <h6 className="text-[15px]">
+        <h6 className="text-[15px] !font-[400]">
           <Link to="/" className="link transition-all">
             Cartify
           </Link>
