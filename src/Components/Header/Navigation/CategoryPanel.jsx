@@ -3,9 +3,10 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { MdClose } from "react-icons/md";
 
+
 import { CategoryCollapse } from "../../CategoryCollapse/CategoryCollapse";
 
-const CategoryPanel = ({ setIsOpenCatPanel, isOpenCatPanel }) => {
+const CategoryPanel = (props) => {
 
   const toggleDrawer = (newOpen) => (event) => {
     if (
@@ -15,7 +16,8 @@ const CategoryPanel = ({ setIsOpenCatPanel, isOpenCatPanel }) => {
     ) {
       return;
     }
-    setIsOpenCatPanel(newOpen);
+    props.setIsOpenCatPanel(newOpen);
+   props.propssetIsOpenCatPanel(newOpen);
   };
 
 
@@ -37,7 +39,7 @@ const CategoryPanel = ({ setIsOpenCatPanel, isOpenCatPanel }) => {
   );
 
   return (
-    <Drawer open={isOpenCatPanel} onClose={toggleDrawer(false)}>
+    <Drawer open={props.isOpenCatPanel} onClose={toggleDrawer(false)}>
       {DrawerList}
     </Drawer>
   );

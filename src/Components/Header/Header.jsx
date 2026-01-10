@@ -20,6 +20,7 @@ import { FaRegUser } from "react-icons/fa";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
+import { HiOutlineMenu } from "react-icons/hi";
 
 // lazy search
 const Search = lazy(() => import("../Search/Search.jsx"));
@@ -56,6 +57,7 @@ const IconWithBadge = memo(function IconWithBadge({
 
 const Header = () => {
   const context = useContext(MyContext);
+    const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
 
   // menu state
   const [anchorEl, setAnchorEl] = useState(null);
@@ -70,43 +72,53 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white">
+    <header className="bg-white w-full">
       {/* TOP STRIP */}
       <div className="py-2 border-y border-gray-200">
-        <div className="container flex justify-between items-center">
-          <p>Get up to 50% off new season styles, limited time only</p>
-
-          <ul className="flex gap-3">
-            <li>
-              <Link to="/help-center">Help Center</Link>
+        <div className="container ">
+          <div className="flex justify-between items-center">
+            <div className="col1 w-[50%] hidden lg:block">
+              <p className="text-[12px] font-[500] mt-0 mb-0">Get up to 50% off new season styles, limited time only</p>
+          </div>
+        
+          <div className="col2 flex item-center justify-between w-full lg:w-[50%] lg:justify-end">
+          <ul className="flex items-center gap-3 justify-between  w-full lg:w-[200px] ">
+            <li className="llist-none">
+              <Link to="/help-center" className=" text-[11px] link font-[500] transition lg:text-[13px]">Help Center{" "}</Link>
             </li>
             <li>
-              <Link to="/order-tracking">Order Tracking</Link>
+              <Link to="/order-tracking" className=" text-[11px] link font-[500] transition lg:text-[13px]">Order Tracking</Link>
             </li>
           </ul>
+          </div>
+        </div>
         </div>
       </div>
 
       {/* MAIN HEADER */}
-      <div className="py-3">
+      <div className="header border-b-[1px] border-gray-250 py-2 lg:py-4">
         <div className="container flex items-center justify-between">
+          {context.windowWidth < 992 &&
+          <Button onClick={() => setIsOpenCatPanel(true)} className="!w-[35px] !min-w-[35px] !h-[35px] rounded-full !text-gray-800"> <HiOutlineMenu  size={22}/>
+          </Button>}
+          
           {/* LOGO */}
-          <div className="w-[20%]">
+          <div className=" col1 w-[40%] lg:w-[25%]  flex justify-center">
             <Link to="/">
               <img src="/logo.png" alt="logo" style={{ width: 90 }} />
             </Link>
           </div>
 
           {/* SEARCH */}
-          <div className="w-[40%]">
+          <div className=" col2 fixed top-0 left-0 w-full h-full lg:w-[45%] lg:static p-2 lg:p-0 z-50 hidden lg:block">
             <Suspense fallback={null}>
               <Search />
             </Suspense>
           </div>
 
           {/* RIGHT */}
-          <div className="w-[35%]">
-            <ul className="flex items-center justify-end gap-3">
+          <div className="col3 w-10% lg:w-[30%] flex items-center pl-7">
+            <ul className="flex items-center justify-end gap-0 lg:gap-3 ">
               {!context.isLogin ? (
                 <li>
                   <Link to="/login">Login</Link> |{" "}
@@ -114,8 +126,9 @@ const Header = () => {
                 </li>
               ) : (
                 <>
-                  {/* ACCOUNT BUTTON (FIXED) */}
-                  <Button
+             
+                 {context.windowWidth > 992 && 
+                 <Button
                     onClick={handleAccountClick}
                     className="flex items-center gap-3"
                     style={{ textTransform: "none" }}
@@ -136,9 +149,9 @@ const Header = () => {
                         style={{ fontSize: 16, color: "rgba(0,0,0,0.7)" }}
                       />
                     </div>
-
-                    {/* name + email */}
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    {
+                      context.windowWidth > 992 &&
+                                          <div style={{ display: "flex", flexDirection: "column" }}>
                       <span
                         style={{
                           fontSize: 14,
@@ -162,7 +175,13 @@ const Header = () => {
                         kishor451817@Gmail.Com
                       </span>
                     </div>
-                  </Button>
+                    }
+
+                    {/* name + email */}
+
+                  </Button>}
+                  {/* ACCOUNT BUTTON (FIXED) */}
+                 
 
                   {/* ACCOUNT MENU */}
                   <Menu
@@ -213,16 +232,18 @@ const Header = () => {
                       </MenuItem>
                     
                   </Menu>
+                
                 </>
               )}
-
+{context.windowWidth >992 && 
               <IconWithBadge title="Compare" badgeContent={4}>
                 <IoGitCompareOutline size={22} />
-              </IconWithBadge>
-
-              <IconWithBadge title="Wishlist" badgeContent={2}>
+              </IconWithBadge>}
+{context.windowWidth >992 &&  <IconWithBadge title="Wishlist" badgeContent={2}>
                 <GrFavorite size={20} />
               </IconWithBadge>
+              }
+             
 
               <IconWithBadge
                 title="Cart"
@@ -236,7 +257,7 @@ const Header = () => {
         </div>
       </div>
 
-      <Navigation />
+      <Navigation isOpenCatPanel ={isOpenCatPanel} setIsOpenCatPanel={setIsOpenCatPanel}/>
     </header>
   );
 };

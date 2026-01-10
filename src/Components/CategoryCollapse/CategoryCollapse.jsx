@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { FaRegPlusSquare, FaRegMinusSquare } from "react-icons/fa";
+import Collapse from "react-collapse"; 
 
 export const CategoryCollapse = () => {
   const [submenuIndex, setSubmenuIndex] = useState(null);

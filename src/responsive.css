@@ -1,0 +1,154 @@
+
+@import "tailwindcss";
+@layer utilities {
+  @media (min-width: 320px) and (max-width: 992px) {
+    html,body {
+      overflow-x: hidden !important ;
+    }
+
+    .btn-sm{
+      padding: 3px 10px !important;
+      font-size:11px !important;
+          }
+     .btn-lg{
+      padding: 5px 10px !important;
+      font-size:14px !important;
+          }
+
+
+       .btn{
+      padding: 5px 10px !important;
+      font-size:12px !important;
+          }
+         .btn svg{
+      font-size:15px !important;
+          }
+
+    .mobileNav a.active button {
+      color: #fc4b03 !important;
+    }
+
+    .navigation ul{
+      white-space: nowrap;
+      overflow-y: hidden;
+      display: block !important;
+    }
+     .navigation ul ::-webkit-scrollbar{
+      display: none !important;
+     }
+
+    .navigation ul li{
+      display:inline-block !important;
+      vertical-align: top ! important;
+    }
+
+    .container {
+      width: 95% !important;
+      max-width: 95% !important;
+    }
+
+    .scrollableBox{
+      white-space:nowrap;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      display: block !important;
+    }
+    .scrollableBox::-webkit-scrollbar{
+      display: none !important;
+     }
+
+    .scrollableBox .box{
+      display: inline-block !important;
+      vertical-align: top ! important;
+      margin-right: 12px !important;
+      width: 300px !important;
+   
+    }
+     .scrollableBox .col{
+      display: inline-block !important;
+      vertical-align: top ! important;
+      margin-right: 12px !important;
+      width: 300px !important;
+   
+    }
+     .scrollableBox .row{
+      display: inline-block !important;
+      vertical-align: top ! important;
+      margin-right: 12px !important;
+      width: 300px !important;
+   
+    }
+     .scrollableBox .row{
+      display: inline-block !important;
+      vertical-align: top ! important;
+      margin-right: 12px !important;
+      width: 300px !important;
+    }
+
+     .productItem .addToCartBtn {
+      padding: 7px 10px !important;
+      font-size: 10px !important;
+    }
+
+    .productSlider .swiper,.blogSection .swiper{
+      overflow: hidden !important;
+    }
+    
+    .resBannerSlider{
+      /* white-space: nowrap; */
+      overflow-x: scroll;
+      overflow-y: hidden;
+      display: block !important;
+    }
+
+    .resBannerSlider .banner{
+      display: inline-block !important;
+      vertical-align: top ! important;
+      margin-right: 12px !important;
+      width: 300px !important;
+    }
+
+    .footerBoxWrap{
+      padding-left:20px;
+
+
+    }
+    .footerBoxWrap .col{
+      width: 180px !important;
+    }
+    .sidebarWrapper.open{
+      bottom: 0px !important;
+      opacity: 1 !important;
+    }
+
+    
+    
+  }
+
+   @media only screen and (min-width: 320px) and (max-width: 767px){
+    .MuiTabs-flexcontainer button{
+     font-size: 13px !important;
+
+    }
+    .productItem .addToCartBtn{
+      padding: 7px 13px !important;
+     
+    }
+    .part2_col1 li a ,.part2_col1 li a{
+      font-size:13px ! important;
+    }
+
+    .sidebar{
+      max-height: 100vh !important;
+      overflow-y: scroll !important;
+      overflow-x: hidden !important;
+    }
+
+    .sidebar::-webkit-scrollbar {
+     display: none !important;
+  
+    }
+   }
+
+
+}

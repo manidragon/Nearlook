@@ -4,13 +4,18 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import Slider from "@mui/material/Slider";
 import Rating from "@mui/material/Rating";
+import { MdOutlineFilterAlt } from "react-icons/md";
 
 import Collapse from "react-collapse"; // ✅ FIXED
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
+import { MyContext } from "../../App";
+import { useContext } from "react";
 
 import "./Sidebar.css";
 
 const Sidebar = () => {
+
+  const context = useContext(MyContext);
   const [isOpenCategoryFilter, setIsOpernCategoryFilter] = useState(true);
   const [isOpenAvailFilter, setIsOpernAvailFilter] = useState(true);
   const [isOpenSizeFilter, setIsOpernSizeFilter] = useState(true);
@@ -18,7 +23,8 @@ const Sidebar = () => {
   const [price, setPrice] = useState([0, 5000]);
 
   return (
-    <aside className="sidebar !py-5 !pr-4">
+    <aside className="sidebar  py-3 lg:py-5 static lg:sticky top-[130px] z-[50] pr-0 lg:!pr-5">
+      <div className="max-h-[60vh] lg:overflow-hidden overflow-auto w-full ">
       {/* CATEGORY */}
       <div className="box">
         <h3 className="w-full !mb-3 text-[16px] font-[600] flex items-center !pr-5">
@@ -135,28 +141,59 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="box !mt-3">
-        <h3 className="w-full !mb-3 text-[16px] font-[600]">Filter By Price</h3>
+        <h3 className="w-full !mb-3 text-[16px] font-[600] flex items-center pr-5">Filter By Rating</h3>
 
-        <div className="w-full">
+        <div className="flex items-center pl-2 lg:pl-1">
+          <FormControlLabel
+          value={5}
+          control={<Checkbox size="small" />}
+            />
         <Rating name="rating" defaultValue={5} size="small" readOnly />
         </div>
-        <div className="w-full">
+        <div className="flex items-center pl-2 lg:pl-1">
+                    <FormControlLabel
+          value={4}
+          control={<Checkbox size="small" />}
+            />
         <Rating name="rating" defaultValue={4} size="small" readOnly />
         </div>
-        <div className="w-full">
+        <div className="flex items-center pl-2 lg:pl-1">
+                    <FormControlLabel
+          value={3}
+          control={<Checkbox size="small" />}
+            />
         <Rating name="rating" defaultValue={3} size="small" readOnly />
         </div>
-        <div className="w-full">
+        <div className="flex items-center pl-2 lg:pl-1">
+                    <FormControlLabel
+          value={2}
+          control={<Checkbox size="small" />}
+            />
         <Rating name="rating" defaultValue={2} size="small" readOnly />
         </div>
-        <div className="w-full">
+        <div className="flex items-center pl-2 lg:pl-1">
+                    <FormControlLabel
+          value={1}
+          control={<Checkbox size="small" />}
+            />
         <Rating name="rating" defaultValue={1} size="small" readOnly />
         </div>
-
+  
       
       </div>
+      </div>
+    
+            <br />
+      <Button className="btn btn-org w-full !flex lg:hidden"  onClick={()=>context?.setOpenFilter(false)}>
+        <MdOutlineFilterAlt size={20} />
+            Filters
+      </Button>
+
     </aside>
+    
   );
 };
 
 export default Sidebar;
+
+

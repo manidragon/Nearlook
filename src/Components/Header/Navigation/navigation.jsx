@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { RiMenu2Fill } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
@@ -6,19 +6,24 @@ import { Link } from "react-router-dom";
 import CategoryPanel from "./CategoryPanel";
 
 import "./style.css";
+import MobileNav from "./MobileNav";
 
-const Navigation = () => {
+const Navigation = (props) => {
   const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
+
 
   const openCategoryPanel = () => {
     setIsOpenCatPanel(true);
   };
+  useEffect(() => {
+    setIsOpenCatPanel(props.isOpenCatPanel);
+  }, [props.isOpenCatPanel]);
 
   return (
     <>
-      <nav>
-        <div className="container flex items-center justify-end gap-5">
-          <div className="col1 w-[20%] ">
+      <nav className="navigation">
+        <div className="container flex items-center justify-start lg:justify-end gap-5">
+          {window.innerWidth >992 &&          <div className="col1 w-[20%] ">
             <Button
               className="!text-black gap-2 w-full "
               onClick={openCategoryPanel}
@@ -28,8 +33,10 @@ const Navigation = () => {
               <IoIosArrowDown className="text-2xl ml-auto justify-end cursor-pointer" />
             </Button>
           </div>
+          }
 
-          <div className="col2 w-[80%]">
+
+          <div className="col2 w-full lg: w-[80%]">
             <ul className="flex items-center !gap-2 nav">
               <li className="list-none mx-4">
                 <Link
@@ -43,7 +50,7 @@ const Navigation = () => {
               </li>
 
               <li className="list-none mx-4 relative group">
-                <Link to="/" className="inline-block">
+                <Link to="/productListing" className="inline-block">
                   <Button className="transition !font-[500] !text-[rgba(0,0,0,0.8)] hover:!text-[#fc4b03]">
                     Fashion
                   </Button>
@@ -389,7 +396,12 @@ const Navigation = () => {
       <CategoryPanel
         setIsOpenCatPanel={setIsOpenCatPanel}
         isOpenCatPanel={isOpenCatPanel}
+        propssetIsOpenCatPanel={props.setIsOpenCatPanel}
       />
+{
+  window.innerWidth < 992  && <MobileNav/>
+}
+     
     </>
   );
 };

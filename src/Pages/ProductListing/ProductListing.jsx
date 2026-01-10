@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -13,9 +13,18 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { MyContext } from "../../App";
+import { useContext } from "react";
 
 const ProductListing = () => {
+   const context = useContext(MyContext);
+
+  useEffect(()=>{
+ 
+    window.scrollTo(0,0);
+  },[])
   const [itemView, setItemView] = useState("grid");
+ 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -50,11 +59,18 @@ const ProductListing = () => {
       </div>
       <div className="bg-white !p-2 !mt-4">
         <div className="container flex gap-3">
-          <div className="sidebarWrapper w-[20%] h-full bg-white !p-3">
+          <div className={`sidebarWrapper  fixed  -bottom-[100%] left-0 w-full lg:static lg:w-[20%] max-h-[77vh] lg:h-full overflow-auto lg:overflow-hidden   bg-white p-3 z-[102] lg:z-[100] lg:p-0    transition-all opacity-100 opacity-0 ${context?.openFilter === true ? 'open':''} `}>
             <Sidebar />
           </div>
+          {
+            context.windowWidth < 992 && (
+              <div className={`filter_overlay w-full h-full bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[101]  ${context?.openFilter === true ? 'block':'hidden'}`} onClick={()=>context?.setOpenFilter(false)}></div>
+            )
+          }
 
-          <div className="rightConten w-[80%] !py-3">
+      
+
+          <div className="rightContent w-full lg:w-[80%] !py-3">
             <div className="bg-[#f1f1f1] !p-2 w-full !mb-4 rounded-md flex items-center">
               <div className="col1 flex items-center itemViewActions">
                 <Button
@@ -75,7 +91,7 @@ const ProductListing = () => {
                   <IoGridSharp className="text-[rgba(0,0,0,0.7)]" />
                 </Button>
 
-                <span className="text-[14px] font-[500] !pl-3 text-[rgba(0,0,0,0.7)]">
+                <span className="text-[14px] hidden  sm:block  md:block lg:block font-[500] !pl-3 text-[rgba(0,0,0,0.7)]">
                   There are 27 products
                 </span>
               </div>
@@ -143,8 +159,8 @@ const ProductListing = () => {
             <div
               className={`grid ${
                 itemView === "grid"
-                  ? "grid-cols-4 md:grid-cols-4"
-                  : "grid-cols-1 md:grid-cols-1"
+                  ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 "
+                  : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"
               } gap-4`}
             >
               {itemView === "grid" ? (

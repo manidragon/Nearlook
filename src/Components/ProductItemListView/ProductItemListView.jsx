@@ -13,15 +13,15 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 
 const ProductItemListView = () => {
   return (
-    <div className="group !mb-4 productItem rounded-md overflow-hidden border-2 border-gray-200 hover:shadow-lg transition-shadow duration-300 hover:bg-stone-200 flex items-center">
+    <div className="group !mb-4 productItem rounded-md overflow-hidden border-2 border-gray-200 hover:shadow-lg transition-shadow duration-300 hover:bg-stone-200 flex items-center flex-col lg:flex-row">
       {/* Image Section */}
-      <div className="imgWrapper w-[30%]  overflow-hidden rounded-md relative !ml-5">
+      <div className="imgWrapper  h-full w-full lg:w-[30%]  overflow-hidden rounded-md relative ">
         <Link to="/">
-          <div className="img h-[220px] overflow-hidden">
+          <div className="img w-full h-fit overflow-hidden">
             <img
               src="https://rukminim2.flixcart.com/image/612/612/xif0q/ethnic-set/f/x/w/s-ma-lamba-creations-original-imahfwu3ux5jf78x.jpeg?q=70"
               alt="Product"
-              className="w-full h-fit object-cover"
+              className="w-full h-[220px] md:h-fit object-cover"
             />
             <img
               src="https://rukminim2.flixcart.com/image/612/612/xif0q/ethnic-set/a/7/v/s-ma-lamba-creations-original-imahfwu3hwqhtpma.jpeg?q=70"
@@ -67,7 +67,7 @@ const ProductItemListView = () => {
       </div>
 
       {/* Info Section */}
-      <div className="info !p-3 !py-5 W-[75%] !px-8">
+      <div className="info !p-3 !py-5  w-full lg:W-[75%]  pb-0  px-3 lg:px-8">
         <h6 className="text-[15px] !font-[400]">
           <Link to="/" className="link transition-all">
             Cartify
