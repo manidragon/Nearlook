@@ -20,13 +20,13 @@ import { Link } from 'react-router-dom';
         </span>
       </div>
 
-      <div className="content !mt-4">
-        <h3 className="text-[15px] font-[600] mb-2 hover:text-orange-500 cursor-pointer">
+      <div className=" info content !mt-4">
+        <h3 className="  text-[15px] font-[600] mb-1 lg:mb-3 hover:text-orange-500 cursor-pointer">
           <Link to="/">
             10 Best Tips to Improve Your Online Shopping Experience
           </Link>
         </h3>
-        <p className="text-gray-600 mb-4 text-[13px] font-[400]">
+        <p className="text-gray-600 mb-3 text-[14px]   lg:text-[16px] font-[400]">
           Discover essential tips to enhance your online shopping experience,
           from finding the best deals to ensuring secure transactions.
         </p>

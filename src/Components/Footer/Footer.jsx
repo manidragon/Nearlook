@@ -29,7 +29,7 @@ const Footer = () =>
       <footer className="py-6 bg-[#fafafa]">
         <div className="container mx-0 ">
           {/* top icons */}
-          <div className="flex flex-wrap items-center justify-center gap-4 py-8 pb-8">
+          <div className="flex items-center justify-center gap-4 py-3 lg:py-8 pb-0 lg:pb-8  px-0 lg:px-5 scrollableBox footerBoxWrap">
             <div className="col flex items-center justify-center flex-col group w-[15%]">
               <LiaShippingFastSolid className="text-[40px] transition-all duration-300 group-hover:text-red-500 group-hover:-translate-y-3" />
               <h3 className="text-[16px] font-[600] mt-3">Free Shipping</h3>
@@ -63,9 +63,9 @@ const Footer = () =>
           <hr />
 
           {/* footer links */}
-          <div className="footer flex py-8 flex-wrap">
+          <div className="footer flex px-3 lg:px-0 flex-col lg:flex-row py-8 ">
             {/* contact */}
-            <div className="part1 w-[25%]">
+            <div className="part1  w-full lg:w-[25%]">
               <h2 className="text-[18px] font-[600] mb-4">Contact us</h2>
               <p className="text-[13px] font-[400] pb-4">
                 Classyshop - Mega Super Store
@@ -83,7 +83,7 @@ const Footer = () =>
 
               <div className="flex items-center gap-2">
                 <IoChatboxOutline className="text-[40px] text-red-500" />
-                <span className="text-[16px] font-[600]">
+                <span className="text-[16px] font-[600] ">
                   Online Chat
                   <br />
                   Get Expert Help
@@ -92,7 +92,7 @@ const Footer = () =>
             </div>
 
             {/* mid menu */}
-            <div className="part2 w-[40%] flex pl-8">
+            <div className="part2 w-full lg:w-[40%] flex pl-0   lg:pl-8 mt-5 lg:mt-0">
               <div className="w-[50%]">
                 <h2 className="text-[18px] font-[600] mb-4">Products</h2>
                 <ul>
@@ -143,8 +143,8 @@ const Footer = () =>
             </div>
 
             {/* newsletter form */}
-            <div className="part3 w-[35%] pl-8 pr-8 flex flex-col">
-              <h2 className="text-[18px] font-[600] mb-4">
+            <div className="part3 w-full lg:w-[35%] pl-0   lg:pl-8 pr-8 flex flex-col  mt-5 lg:mt-0">
+              <h2 className="text-[18px] font-[600]mb-2  lg:mb-4">
                 Subscribe to newsletter
               </h2>
               <p className="text-[13px]">
@@ -163,8 +163,8 @@ const Footer = () =>
                   SUBSCRIBE
                 </Button>
 
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
+                <FormControlLabel 
+                  control={<Checkbox defaultChecked />} className="mt-3 lg:mt-0 block w-full"
                   label="I agree to the terms and conditions and the privacy policy"
                 />
               </form>
@@ -174,9 +174,9 @@ const Footer = () =>
       </footer>
 
       {/* bottom strip */}
-      <div className="bottomStrip border-t border-[rgba(0,0,0,0.1)] py-3 bg-white">
-        <div className="container flex items-center justify-between">
-          <ul className="flex items-center gap-2">
+      <div className="bottomStrip border-t border-[rgba(0,0,0,0.1)] pt-3 pb-[100px] lg:pb-3 bg-white">
+        <div className="container flex items-center justify-between flex-col  lg:flex-row gap-4 lg:gap-0">
+          <ul className="flex  items-center gap-2">
             <li>
               <a
                 href="/"
@@ -222,7 +222,7 @@ const Footer = () =>
             </li>
           </ul>
 
-          <p className="text-[13px]">© 2024 - Ecommerce Template</p>
+          <p className="text-[13px]">© 2025 - NearLook Mart .Pvtd</p>
 
           <div className="flex">
             <img src="/payment-all-6.png" alt="payments" />
