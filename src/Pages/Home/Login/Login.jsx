@@ -12,9 +12,9 @@ const Login = () => {
     const [isPasswordShow, setIsPasswordShow] = useState(false);
 
   return (
-    <section className='section py-10'>
+    <section className='section py-5 sm:py-10'>
       <div className='container'>
-        <div className='card shadow-md w-[400px] m-auto rounded-md bg-white p-5 px-10'>
+        <div className='card shadow-md w-full sm:w-[400px] m-auto rounded-md bg-white p-5 px-10'>
             <h3 className="text-center text-[18px] font-medium text-gray-900 mb-4">
                Login to your account
             </h3>

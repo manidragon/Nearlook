@@ -21,6 +21,8 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { HiOutlineMenu } from "react-icons/hi";
+import LocationTrigger from "../Location/LocationTrigger";
+import LocationModal from "../Location/LocationModal";
 
 // lazy search
 const Search = lazy(() => import("../Search/Search.jsx"));
@@ -34,6 +36,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     padding: "0 4px",
   },
 }));
+
+
+
+ 
 
 const IconWithBadge = memo(function IconWithBadge({
   title,
@@ -59,6 +65,19 @@ const Header = () => {
   const context = useContext(MyContext);
     const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
 
+  
+
+      const [showModal, setShowModal] = useState(false);
+const [address, setAddress] = useState(() => {
+  const stored = localStorage.getItem("delivery_location");
+  return stored ? JSON.parse(stored) : null;
+});
+   React.useEffect(() => {
+    if (address) {
+      localStorage.setItem("delivery_location", JSON.stringify(address));
+    }
+  }, [address]);
+
   // menu state
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -72,9 +91,9 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white w-full">
+    <header className="bg-white w-full sticky top-0 z-[999] shadow-lg overflow-hidden ">
       {/* TOP STRIP */}
-      <div className="py-2 border-y border-gray-200">
+      <div className="py-1 border-y border-gray-200">
         <div className="container ">
           <div className="flex justify-between items-center">
             <div className="col1 w-[50%] hidden lg:block">
@@ -96,18 +115,36 @@ const Header = () => {
       </div>
 
       {/* MAIN HEADER */}
-      <div className="header border-b-[1px] border-gray-250 py-2 lg:py-4">
+      <div className="header border-b-[1px] border-gray-250 py-2 lg:py-4 ">
         <div className="container flex items-center justify-between">
           {context.windowWidth < 992 &&
           <Button onClick={() => setIsOpenCatPanel(true)} className="!w-[35px] !min-w-[35px] !h-[35px] rounded-full !text-gray-800"> <HiOutlineMenu  size={22}/>
           </Button>}
           
           {/* LOGO */}
-          <div className=" col1 w-[40%] lg:w-[25%]  flex justify-center">
+          <div className=" col1 w-[40%] lg:w-[13%]  flex justify-center">
             <Link to="/">
               <img src="/logo.png" alt="logo" style={{ width: 90 }} />
             </Link>
+          </div>{
+            context.windowWidth >= 992 &&            <div className=" col1 w-[40%] lg:w-[20%]  flex justify-center">
+            <Link to="/">
+                   <LocationTrigger
+        address={address}
+        onClick={() => setShowModal(true)}
+      />
+
+      {showModal && (
+        <LocationModal
+          onClose={() => setShowModal(false)}
+          setAddress={setAddress}
+        />
+      )}
+
+            </Link>
           </div>
+          }
+
 
           {/* SEARCH */}
           <div className=" col2 fixed top-0 left-0 w-full h-full lg:w-[45%] lg:static p-2 lg:p-0 z-50 hidden lg:block">
@@ -235,10 +272,10 @@ const Header = () => {
                 
                 </>
               )}
-{context.windowWidth >992 && 
+{/* {context.windowWidth >992 && 
               <IconWithBadge title="Compare" badgeContent={4}>
                 <IoGitCompareOutline size={22} />
-              </IconWithBadge>}
+              </IconWithBadge>} */}
 {context.windowWidth >992 &&  <IconWithBadge title="Wishlist" badgeContent={2}>
                 <GrFavorite size={20} />
               </IconWithBadge>

@@ -16,6 +16,8 @@ import { ProductDetails } from "./Pages/ProductDetails/ProductDetails.jsx";
 import MyAccount from "./Pages/MyAccount/MyAccount.jsx";
 import MyList from "./Pages/MyList/MyList.jsx";
 import Orders from "./Pages/Orders/Orders.jsx";
+import  ReviewsPage  from "./Pages/ProductDetails/ReviewsPage.jsx";
+import OrderDetails from "./Pages/Orders/OrderDetails.jsx";
 
 
 // ✅ CREATE & EXPORT CONTEXT 
@@ -61,8 +63,8 @@ function App() {
   return (
     <MyContext.Provider value={values}>
       <BrowserRouter>
-        <Header />
-
+        <Header  />
+<main  >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productListing" element={<ProductListing />} />
@@ -74,7 +76,10 @@ function App() {
           <Route path="/my-account" element={<MyAccount />} />
           <Route path="/my-list" element={<MyList />} />
           <Route path="/my-orders" element={<Orders />} />
+           <Route path="/my-orders/:orderId" element={<OrderDetails />} />
+          <Route path="/product/:id/reviews" element={<ReviewsPage />} />
         </Routes>
+</main>
 
         <Footer />
       </BrowserRouter>

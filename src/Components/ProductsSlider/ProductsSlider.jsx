@@ -13,6 +13,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import ProductItem from '../ProductItem/ProductItem';
+import { PRODUCTS } from "../../data/products";
 
  const ProductsSlider = (props) => {
       const context=useContext(MyContext);
@@ -48,30 +49,11 @@ import ProductItem from '../ProductItem/ProductItem';
           }}
                     className="mySwiper"
                   >
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
-              <SwiperSlide>
-                  <ProductItem />
-              </SwiperSlide>
+             {PRODUCTS.map((product) => (
+  <SwiperSlide key={product.id}>
+    <ProductItem product={product} />
+  </SwiperSlide>
+))}
             </Swiper>
           
       </div> 

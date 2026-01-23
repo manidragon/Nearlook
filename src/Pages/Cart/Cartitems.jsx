@@ -5,8 +5,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { GoTriangleDown } from "react-icons/go";
 import Rating from "@mui/material/Rating";
 import { IoCloseSharp } from "react-icons/io5";
+import Button from "@mui/material/Button";
+import { MyContext } from "../../App";
+import { useContext } from "react";
 
-const Cartitems = (props) =>
+const 
+Cartitems = (props) =>
 {
     const [sizeanchorEl, setSizeAnchorEl] = useState(null);
     const [selectedSize, setCartItems] = useState(props.size);
@@ -15,6 +19,7 @@ const Cartitems = (props) =>
     const [qtyanchorEl, setQtyAnchorEl] = useState(null);
     const [selectedQty, setSelectedQty] = useState(props.qty);
     const openQty = Boolean(qtyanchorEl);
+     const context = useContext(MyContext);
 
 
     const handleClickSize = (event) =>{     
@@ -44,7 +49,7 @@ const Cartitems = (props) =>
 
     return (
       <div className="cartItem w-full p-3 flex items-center gap-4 pb-5 border-b border-[rgba(0,0,0,0.1)]">
-        <div className="img w-[15%] rounded-md overflow-hidden">
+        <div className="img w-[30%] sm:w-[20%] lg:w-[15%] rounded-md overflow-hidden">
           <Link to="/product/7845" className="group">
             <img
               src="https://api.spicezgold.com/download/file_1734690981297_011618e4-4682-4123-be80-1fb7737d34ad1714702040213RARERABBITMenComfortOpaqueCasualShirt1.jpg"
@@ -54,19 +59,19 @@ const Cartitems = (props) =>
           </Link>
         </div>
 
-        <div className="info w-[85%] relative">
+        <div className="info w-[70%] sm:w-[80%] lg:w-[85%] pr-5 relative pt-3">
           <IoCloseSharp
             className="cursor-pointer absolute top-[0px] right-[0px] text-
                    [22px] link transition-all"
           />
           <span className="text-[13px]">Rare Rabbit</span>
 
-          <h3 className="text-[15px] font-[600] text-black">
+          <h3 className=" text-[12px] sm:text-[15px] font-[600] text-black w-80%">
             <Link
               to="/product/7845"
               className="text-gray-800 hover:text-red-500 transition"
             >
-              Men Alias-N Regular Fit Spread Collar Shirt
+              {`Men Alias-N Regular Fit Spread Collar Shirt`.substring(0, context?.windowWidth < 992 ? 50 : 12)+'...'}
             </Link>
           </h3>
 

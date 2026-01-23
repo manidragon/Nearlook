@@ -1,42 +1,78 @@
-import React, { useState } from "react";
-import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
-import { Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
-export const QtyBox = () => {
-  const [qtyVal, setQtyVal] = useState(1);
+export const QtyBox = ({
+  min = 1,
+  max = 99,
+  value = 1,
+  onChange,
+}) => {
+  const [qty, setQty] = useState(value);
 
-  const plusQty = () => {
-    setQtyVal((prev) => prev + 1);
-  };
+  useEffect(() => {
+    setQty(value);
+  }, [value]);
 
-  const minusQty = () => {
-    setQtyVal((prev) => (prev > 1 ? prev - 1 : 1)); // prevent negative values
+  const updateQty = (val) => {
+    if (isNaN(val)) return;
+    const newVal = Math.max(min, Math.min(max, val));
+    setQty(newVal);
+    onChange && onChange(newVal);
   };
 
   return (
-    <div className="qtyBox flex items-center relative">
+    <div
+      className="
+        grid grid-cols-[44px_1fr_44px] 
+        w-full 
+        bg-white border border-gray-300 
+        rounded-3xl overflow-hidden shadow-sm
+      "
+    >
+      {/* Minus */}
+      <button
+        onClick={() => updateQty(qty - 1)}
+        disabled={qty <= min}
+        className="
+          flex items-center justify-center
+           p-3
+          text-gray-600 hover:bg-gray-100 active:bg-gray-200
+          disabled:opacity-40 disabled:cursor-not-allowed
+          transition
+        "
+      >
+        <FaMinus size={14} />
+      </button>
+
+      {/* Input (Full Width Center) */}
       <input
         type="number"
-        className="w-full h-[40px] p-2 pl-5 text-[15px] focus:outline-none border border-[rgba(0,0,0,0.2)] rounded-md"
-        value={qtyVal}
-        onChange={(e) => setQtyVal(Number(e.target.value))}
+        inputMode="numeric"
+        value={qty}
+        onChange={(e) => updateQty(Number(e.target.value))}
+        className="
+          w-full 
+          text-center
+          text-[14px] md:text-[15px] lg:text-[16px]
+          border-x border-gray-300
+          focus:outline-none focus:ring-1 focus:ring-blue-500
+        "
       />
 
-      <div className="flex items-center flex-col justify-between h-[40px] absolute top-0 right-0 z-50">
-        <Button
-          className="!min-w-[25px] !w-[25px] !h-[20px] !text-black hover:!bg-[#f1f1f1]"
-          onClick={plusQty}
-        >
-          <FaAngleUp className="opacity-55" />
-        </Button>
-
-        <Button
-          className="!min-w-[25px] !w-[25px] !h-[20px] !text-black hover:!bg-[#f1f1f1]"
-          onClick={minusQty}
-        >
-          <FaAngleDown className="opacity-55" />
-        </Button>
-      </div>
+      {/* Plus */}
+      <button
+        onClick={() => updateQty(qty + 1)}
+        disabled={qty >= max}
+        className="
+          flex items-center justify-center
+         p-3
+          text-gray-600 hover:bg-gray-100 active:bg-gray-200
+          disabled:opacity-40 disabled:cursor-not-allowed
+          transition
+        "
+      >
+        <FaPlus size={14} />
+      </button>
     </div>
   );
 };

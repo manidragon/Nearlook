@@ -1,337 +1,450 @@
-import React, { useRef, useEffect, useState } from "react";
-import AccountSidebar from "../../Components/AccountSidebar/AccountSidebar";
-import { Button } from "@mui/material";
-import Badge from "../../Components/Badge/Badge";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
+// OrdersPage.jsx
+// FULL PAGE WITH WORKING SEARCH + STATUS FILTERS + TIME FILTERS (DESKTOP + MOBILE)
 
+import React, { useState, useContext } from 'react';
+import { Search, Star, SlidersHorizontal } from "lucide-react";
+import { MyContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
+export default function OrdersPage() {
+  const context = useContext(MyContext);
+  const navigate = useNavigate();
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
 
-const Orders = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [filters, setFilters] = useState({
+    onTheWay: false,
+    delivered: false,
+    cancelled: false,
+    returned: false,
+    last30Days: false,
+    year2024: false,
+    year2023: false,
+    older: false
+  });
 
-  const toggleOrder = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
+  // ----------------------------
+  // ORDERS DATA
+  // ----------------------------
+  const orders = [
+    {
+      id: 1,
+      orderId: "OD33271233986702240",
+      name: "Analog-Digital Watch - For Men & Women",
+      price: "₹506",
+      image: "https://picsum.photos/100/100?random=1",
+      status: "cancelled",
+      statusText: "Cancelled on Nov 07, 2024",
+      message: "Sorry, your order was cancelled since the seller couldn't deliver it.",
+      color: "Black"
+    },
+    {
+      id: 2,
+      orderId: "OD33271233986702241",
+      name: "SAFARI ASHPER CB With 6 Pockets 30 L Lap...",
+      price: "₹479",
+      image: "https://picsum.photos/100/100?random=2",
+      status: "delivered",
+      statusText: "Delivered on Oct 24, 2024",
+      message: "Your item has been delivered",
+      color: "Black",
+      canReview: true
+    },
+    {
+      id: 3,
+      orderId: "OD33271233986702242",
+      name: "PROVOGUE Spacy unisex with rain cover an...",
+      price: "₹504",
+      image: "https://picsum.photos/100/100?random=3",
+      status: "delivered",
+      statusText: "Delivered on Jun 21, 2024",
+      message: "Your item has been delivered",
+      color: "Black",
+      canReview: true
+    },
+    {
+      id: 4,
+      orderId: "OD33271233986702243",
+      name: "PROVOGUE Spacy unisex with rain cover an...",
+      price: "₹504",
+      image: "https://picsum.photos/100/100?random=4",
+      status: "cancelled",
+      statusText: "Cancelled on Jun 12, 2024",
+      message:
+        "Sorry, your order was cancelled as it could not be delivered due to logistical constraints.",
+      color: "Black"
+    },
+    {
+      id: 5,
+      orderId: "OD33271233986702244",
+      name: "IMPULSE Rucksack bag travel bag for men ...",
+      price: "₹1,285",
+      image: "https://picsum.photos/100/100?random=5",
+      status: "delivered",
+      statusText: "Delivered on Nov 17, 2023",
+      message: "Your item has been delivered",
+      color: "Black",
+      canReview: true
+    },
+    {
+      id: 6,
+      orderId: "OD33271233986702245",
+      name: "STRIKER Men Grey Sports Sandals",
+      price: "₹599",
+      image: "https://picsum.photos/100/100?random=6",
+      status: "delivered",
+      statusText: "Delivered on Oct 13, 2023",
+      message: "Your item has been delivered",
+      color: "Grey",
+      size: "10",
+      canReview: true
+    },
+    {
+      id: 7,
+      orderId: "OD33271233986702246",
+      name: "ABREXO Abx2266 Black Dial Silver Bracele...",
+      price: "₹296",
+      image: "https://picsum.photos/100/100?random=7",
+      status: "delivered",
+      statusText: "Delivered on Jan 03, 2023",
+      message: "Your item has been delivered",
+      canReview: true
+    }
+  ];
+
+  // ----------------------------
+  // HELPERS
+  // ----------------------------
+  const parseDateFromStatus = (statusText) => {
+    const match = statusText.match(/on (.+)$/);
+    return match ? new Date(match[1]) : null;
   };
 
-  /* ===== SCROLL + RED BAR REFS ===== */
-  const scrollRef = useRef(null);
-  const barRef = useRef(null);
-
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const startScroll = useRef(0);
-
-  /* ===== RED BAR DRAG LOGIC ===== */
-  useEffect(() => {
-    const onMouseMove = (e) => {
-      if (!isDragging.current) return;
-
-      const scrollEl = scrollRef.current;
-      const barEl = barRef.current;
-
-      const dx = e.clientX - startX.current;
-      const maxScroll = scrollEl.scrollWidth - scrollEl.clientWidth;
-      const trackWidth = scrollEl.clientWidth - barEl.offsetWidth;
-
-      const scrollMove = (dx / trackWidth) * maxScroll;
-      scrollEl.scrollLeft = startScroll.current + scrollMove;
-
-      const ratio = scrollEl.scrollLeft / maxScroll || 0;
-      barEl.style.transform = `translateX(${ratio * trackWidth}px)`;
-    };
-
-    const onMouseUp = () => {
-      isDragging.current = false;
-      document.body.style.userSelect = "auto";
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
-  }, []);
-
-  const onBarMouseDown = (e) => {
-    isDragging.current = true;
-    startX.current = e.clientX;
-    startScroll.current = scrollRef.current.scrollLeft;
-    document.body.style.userSelect = "none";
+  const clearFilters = () => {
+    setFilters({
+      onTheWay: false,
+      delivered: false,
+      cancelled: false,
+      returned: false,
+      last30Days: false,
+      year2024: false,
+      year2023: false,
+      older: false
+    });
   };
+
+  const applyFilters = () => {
+    setShowFilters(false);
+  };
+
+  // ----------------------------
+  // FILTER LOGIC
+  // ----------------------------
+  const filteredOrders = orders.filter(order => {
+    // SEARCH
+    if (
+      searchQuery &&
+      !order.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !order.orderId.toLowerCase().includes(searchQuery.toLowerCase())
+    ) {
+      return false;
+    }
+
+    // STATUS FILTER
+    const statusActive =
+      filters.onTheWay ||
+      filters.delivered ||
+      filters.cancelled ||
+      filters.returned;
+
+    if (statusActive) {
+      let match = false;
+
+      if (filters.delivered && order.status === "delivered") match = true;
+      if (filters.cancelled && order.status === "cancelled") match = true;
+      if (filters.returned && order.status === "returned") match = true;
+      if (filters.onTheWay && order.status === "onTheWay") match = true;
+
+      if (!match) return false;
+    }
+
+    // TIME FILTER
+    const orderDate = parseDateFromStatus(order.statusText);
+    if (!orderDate) return true;
+
+    const now = new Date();
+    const daysDiff = (now - orderDate) / (1000 * 60 * 60 * 24);
+    const year = orderDate.getFullYear();
+
+    const timeActive =
+      filters.last30Days ||
+      filters.year2024 ||
+      filters.year2023 ||
+      filters.older;
+
+    if (timeActive) {
+      let match = false;
+
+      if (filters.last30Days && daysDiff <= 30) match = true;
+      if (filters.year2024 && year === 2024) match = true;
+      if (filters.year2023 && year === 2023) match = true;
+      if (filters.older && year < 2023) match = true;
+
+      if (!match) return false;
+    }
+
+    return true;
+  });
 
   return (
-    <section style={{ padding: "40px 0", width: "100%" }}>
-      <div className="container" style={{ display: "flex", gap: 20 }}>
-        {/* SIDEBAR */}
-        <div style={{ width: "20%" }}>
-          <AccountSidebar />
-        </div>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-1 lg:px-4 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
 
-        {/* CONTENT */}
-        <div style={{ width: "80%" }}>
-          <div style={card}>
-            <h2 style={{ fontSize: 16, fontWeight: 600 }}>My Orders</h2>
+          {/* FILTER SIDEBAR */}
+          <aside className="hidden lg:block lg:w-64 bg-white p-4 rounded shadow-sm h-fit">
+            <h2 className="font-semibold text-lg mb-4">Filters</h2>
 
-            <p style={{ marginBottom: 15 }}>
-              There are <span style={{ color: "red", fontWeight: 600 }}>2</span>{" "}
-              Orders
-            </p>
-
-            {/* ===== SCROLL CONTAINER ===== */}
-            <div ref={scrollRef} style={scrollBox}>
-              <table style={table}>
-                <thead>
-                  <tr style={thead}>
-                    <th></th>
-                    <th style={thStyle}>Order Id</th>
-                    <th style={thStyle}>Payment Id</th>
-                    <th style={thStyle}>Name</th>
-                    <th style={thStyle}>Phone</th>
-                    <th style={thStyle}>Address</th>
-                    <th style={thStyle}>Pincode</th>
-                    <th style={thStyle}>Amount</th>
-                    <th style={thStyle}>Email</th>
-                    <th style={thStyle}>User Id</th>
-                    <th style={thStyle}>Order Status</th>
-                    <th style={thStyle}>Date</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {/* ===== MAIN ROW ===== */}
-                  <tr>
-                    <td style={tdStyle}>
-                      <Button style={iconBtn} onClick={() => toggleOrder(0)}>
-                        <Button style={iconBtn} onClick={() => toggleOrder(0)}>
-                          {openIndex === 0 ? <FaAngleUp /> : <FaAngleDown />}
-                        </Button>
-                      </Button>
-                    </td>
-
-                    <td style={tfStyle} className="text-red-400">
-                      24122002
-                    </td>
-                    <td className="text-red-400" style={tfStyle}>pay_01</td>
-                    <td style={tdStyle}>Kishor</td>
-                    <td style={tdStyle}>875421562</td>
-                    <td style={{ ...tdStyle, minWidth: 200 }}>
-                      GPA mahal, balan nagar, Allinagaram, Theni
-                    </td>
-                    <td style={tdStyle}>625531</td>
-                    <td style={tdStyle}>600</td>
-                    <td style={tdStyle}>kishor451817@gmail.com</td>
-                    <td style={tdStyle}>98765</td>
-                    <td style={tdStyle}>
-                      <Badge status="pending" />
-                    </td>
-                    <td style={tdStyle}>28-04-2024</td>
-                  </tr>
-
-                  {/* ===== CHILD TABLE ===== */}
-                  {openIndex === 0 && (
-                    <tr>
-                      <td colSpan="14" style={childWrapper}>
-                        <table style={childTable}>
-                          <thead>
-                            <tr style={thead}>
-                              <th style={{ ...thStyle, width: 140 }}>
-                                Product Id
-                              </th>
-                              <th
-                                style={{
-                                  ...thStyle,
-                                  width: 220,
-                                  textAlign: "left",
-                                }}
-                              >
-                                Product Title
-                              </th>
-                              <th style={{ ...thStyle, width: 100 }}>Image</th>
-                              <th style={{ ...thStyle, width: 80 }}>Qty</th>
-                              <th style={{ ...thStyle, width: 100 }}>Price</th>
-                              <th style={{ ...thStyle, width: 120 }}>
-                                SubTotal
-                              </th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr>
-                              <td className="text-gray-800" style={{ ...tfStyle, width: 120 }}>
-                                24122002
-                              </td>
-
-                              <td
-                                style={{
-                                  ...tdStyle,
-                                  width: 300,
-                                  textAlign: "left",
-                                }}
-                              >
-                                A line kurti with sharara
-                              </td>
-
-                              <td style={{ ...tdStyle, width: 100 }}>
-                                <img
-                                  src="https://api.spicezgold.com/download/file_1734526483283_siril-poly-silk-grey-off-white-color-saree-with-blouse-piece-product-images-rvcpwdyagl-0-202304220521.webp"
-                                  alt=""
-                                  style={{
-                                    width: 42,
-                                    height: 42,
-                                    borderRadius: 6,
-                                    objectFit: "cover",
-                                    display: "block",
-                                    margin: "0 auto",
-                                  }}
-                                />
-                              </td>
-
-                              <td style={{ ...tdStyle, width: 80 }}>2</td>
-                              <td style={{ ...tdStyle, width: 100 }}>650</td>
-                              <td style={{ ...tdStyle, width: 120 }}>1300</td>
-                            </tr>
-
-                            <tr>
-                              <td style={{ ...tfStyle, width: 120 }}>
-                                <span className="text-gray-800">
-                                  24122002
-                                  </span>
-                              </td>
-
-                              <td
-                                style={{
-                                  ...tdStyle,
-                                  width: 300,
-                                  textAlign: "left",
-                                }}
-                              >
-                                A line kurti with sharara
-                              </td>
-
-                              <td style={{ ...tdStyle, width: 100 }}>
-                                <img
-                                  src="https://api.spicezgold.com/download/file_1734526483283_siril-poly-silk-grey-off-white-color-saree-with-blouse-piece-product-images-rvcpwdyagl-0-202304220521.webp"
-                                  alt=""
-                                  style={{
-                                    width: 42,
-                                    height: 42,
-                                    borderRadius: 6,
-                                    objectFit: "cover",
-                                    display: "block",
-                                    margin: "0 auto",
-                                  }}
-                                />
-                              </td>
-
-                              <td style={{ ...tdStyle, width: 80 }}>2</td>
-                              <td style={{ ...tdStyle, width: 100 }}>650</td>
-                              <td style={{ ...tdStyle, width: 120 }}>1300</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+            <div className="mb-6">
+              <h3 className="font-semibold text-sm mb-3 text-gray-700">ORDER STATUS</h3>
+              <div className="space-y-2">
+                {[
+                  { key: 'onTheWay', label: 'On the way' },
+                  { key: 'delivered', label: 'Delivered' },
+                  { key: 'cancelled', label: 'Cancelled' },
+                  { key: 'returned', label: 'Returned' }
+                ].map(filter => (
+                  <label key={filter.key} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={filters[filter.key]}
+                      onChange={(e) => setFilters({ ...filters, [filter.key]: e.target.checked })}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-sm">{filter.label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
 
-            {/* ===== RED SCROLL BAR ===== */}
-            <div style={barTrack}>
-              <div ref={barRef} style={bar} onMouseDown={onBarMouseDown} />
+            <div>
+              <h3 className="font-semibold text-sm mb-3 text-gray-700">ORDER TIME</h3>
+              <div className="space-y-2">
+                {[
+                  { key: 'last30Days', label: 'Last 30 days' },
+                  { key: 'year2024', label: '2024' },
+                  { key: 'year2023', label: '2023' },
+                  { key: 'older', label: 'Older' }
+                ].map(filter => (
+                  <label key={filter.key} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={filters[filter.key]}
+                      onChange={(e) => setFilters({ ...filters, [filter.key]: e.target.checked })}
+                      className="w-4 h-4"
+                    />
+                    <span className="text-sm">{filter.label}</span>
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
+          </aside>
+
+          {/* MAIN CONTENT */}
+          <main className="flex-1">
+
+            {/* SEARCH BAR */}
+            <div className="bg-white p-4 rounded shadow-sm mb-4">
+              <div className="flex gap-2 mb-4">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input
+                    type="text"
+                    placeholder="Search your order here"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                {context.windowWidth < 992 && (
+                  <button
+                    onClick={() => setShowFilters(true)}
+                    className="px-4 py-3 border border-gray-300 rounded-lg flex items-center gap-2 bg-white"
+                  >
+                    <SlidersHorizontal size={18} />
+                    <span className="hidden sm:inline">Filters</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* EMPTY STATE */}
+            {filteredOrders.length === 0 && (
+              <div className="text-center py-10 text-gray-500">
+                No orders match your filters
+              </div>
+            )}
+
+            {/* ORDERS LIST */}
+            <div className="space-y-4">
+              {filteredOrders.map(order => (
+                <div
+                  key={order.id}
+                  onClick={() => navigate(`/my-orders/${order.orderId}`)}
+                  className="bg-white rounded shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition"
+                >
+                  <div className="p-4 flex flex-col md:flex-row gap-4">
+                    <img
+                      src={order.image}
+                      alt={order.name}
+                      className="w-24 h-24 object-cover rounded"
+                    />
+
+                    <div className="flex-1">
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900 mb-1">{order.name}</h3>
+                          {order.color && (
+                            <p className="text-sm text-gray-600">Color: {order.color}</p>
+                          )}
+                          {order.size && (
+                            <p className="text-sm text-gray-600">Size: {order.size}</p>
+                          )}
+                        </div>
+                        <div className="lg:text-right">
+                          <p className="font-semibold text-lg">{order.price}</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              order.status === 'delivered' ? 'bg-green-500' : 'bg-red-500'
+                            }`}
+                          ></span>
+                          <span
+                            className={`font-medium ${
+                              order.status === 'delivered'
+                                ? 'text-green-600'
+                                : 'text-red-600'
+                            }`}
+                          >
+                            {order.statusText}
+                          </span>
+                        </div>
+
+                        {order.canReview && (
+                          <button
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-orange-600 hover:text-orange-700 flex items-center gap-1 text-sm font-medium"
+                          >
+                            <Star size={16} />
+                            Rate & Review Product
+                          </button>
+                        )}
+                      </div>
+
+                      <p className="text-sm text-gray-600 mt-2">{order.message}</p>
+                      <p className="text-xs text-gray-400 mt-2">Order ID: {order.orderId}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center py-8">
+              <p className="text-orange-600 font-medium">No More Results To Display</p>
+            </div>
+
+            {/* MOBILE FILTER MODAL */}
+            {showFilters && (
+              <div className="fixed inset-0 bg-[#000000ab] z-[60] lg:hidden">
+                <div className="absolute bottom-12 left-0 right-0 bg-white rounded-t-2xl max-h-[70vh] overflow-y-auto">
+                  <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-4 flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">Filters</h3>
+                    <button onClick={clearFilters} className="text-sm text-gray-500">
+                      Clear Filter
+                    </button>
+                  </div>
+
+                  <div className="p-4">
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-3">Order Status</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          { key: 'onTheWay', label: 'On the way' },
+                          { key: 'delivered', label: 'Delivered' },
+                          { key: 'cancelled', label: 'Cancelled' },
+                          { key: 'returned', label: 'Returned' }
+                        ].map(filter => (
+                          <button
+                            key={filter.key}
+                            onClick={() =>
+                              setFilters({ ...filters, [filter.key]: !filters[filter.key] })
+                            }
+                            className={`px-4 py-2 rounded-full border text-sm ${
+                              filters[filter.key]
+                                ? 'bg-gray-900 text-white border-gray-900'
+                                : 'bg-white text-gray-700 border-gray-300'
+                            }`}
+                          >
+                            {filter.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-3">Order Time</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          { key: 'last30Days', label: 'Last 30 days' },
+                          { key: 'year2024', label: '2024' },
+                          { key: 'year2023', label: '2023' },
+                          { key: 'older', label: 'Older' }
+                        ].map(filter => (
+                          <button
+                            key={filter.key}
+                            onClick={() =>
+                              setFilters({ ...filters, [filter.key]: !filters[filter.key] })
+                            }
+                            className={`px-4 py-2 rounded-full border text-sm ${
+                              filters[filter.key]
+                                ? 'bg-gray-900 text-white border-gray-900'
+                                : 'bg-white text-gray-700 border-gray-300'
+                            }`}
+                          >
+                            {filter.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 p-4 flex gap-3">
+                    <button
+                      onClick={() => setShowFilters(false)}
+                      className="flex-1 py-3 border border-gray-300 rounded-lg font-medium"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={applyFilters}
+                      className="flex-1 py-3 bg-orange-500 text-white rounded-lg font-medium"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </main>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-/* ===== STYLES ===== */
-
-const card = {
-  background: "#fff",
-  borderRadius: 6,
-  padding: 20,
-  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-};
-
-const scrollBox = {
-  overflow: "hidden",
-};
-
-const table = {
-  minWidth: 1600, // ✅ parent table only
-  borderCollapse: "collapse",
-  fontSize: 13,
-};
-
-const childTable = {
-  width: "20%", // ✅ child table fixed
-  tableLayout: "fixed",
-  borderCollapse: "collapse",
-  fontSize: 13,
-};
-
-const thead = {
-  background: "#F4F7FA",
-  color: "#4A4F55",
-};
-
-const thStyle = {
-  padding: "14px",
-  fontWeight: 600,
-  whiteSpace: "nowrap",
-  textAlign: "center",
-  verticalAlign: "middle",
-};
-
-const tdStyle = {
-  padding: "14px",
-  whiteSpace: "nowrap",
-  color: "#555",
-  textAlign: "center",
-  verticalAlign: "middle",
-};
-
-const childWrapper = {
-  background: "#f1f1f1",
-  paddingLeft: 60,
-};
-
-const iconBtn = {
-  width: 35,
-  height: 35,
-  minWidth: 35,
-  borderRadius: "50%",
-  background: "#f1f1f1",
-};
-
-const barTrack = {
-  marginTop: 12,
-  height: 5,
-  background: "#e0e0e0",
-  borderRadius: 5,
-  position: "relative",
-};
-
-const bar = {
-  width: 120,
-  height: "100%",
-  background: "#FF5A3C",
-  borderRadius: 5,
-  cursor: "default",
-};
-
-const tfStyle = {
-  padding: "14px",
-  whiteSpace: "nowrap",
-  
-  textAlign: "center",
-  verticalAlign: "middle",
-};
-
-export default Orders;
+}

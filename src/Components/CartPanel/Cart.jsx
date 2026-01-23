@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import Button from "@mui/material/Button";
+import { MyContext } from "../../App";
+import { useContext } from "react";
 
 const CartPanel = () => {
+       const context = useContext(MyContext);
   return (
     <>
       {/* CART ITEMS */}
@@ -33,7 +36,7 @@ const CartPanel = () => {
                   to="/product/5485"
                   className="link hover:text-red-500 transition"
                 >
-                  Glowworld Women Blue Printed Cotton Kurta
+  {` Glowworld Women Blue Printed Cotton Kurta`.substring(0, context?.windowWidth < 992 ? 50 : 12)+'...'}
                 </Link>
               </h4>
 
@@ -76,11 +79,12 @@ const CartPanel = () => {
 
           <div className="flex gap-3">
             <Link to="/cart" className="w-1/2">
-              <Button className="btn-org w-full">View Cart</Button>
+              <Button className="btn-org w-full">
+                <span className="text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] ">View Cart</span> </Button>
             </Link>
 
             <Link to="/checkout" className="w-1/2">
-              <Button className="btn-org btn-border w-full">Checkout</Button>
+              <Button className="btn-org btn-border w-full"> <span className="text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] ">Checkout</span></Button>
             </Link>
           </div>
         </div>

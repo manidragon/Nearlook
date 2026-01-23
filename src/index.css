@@ -3,7 +3,14 @@
 
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth !important;
 
+}
+
+
+
+header{
+  overflow-x: hidden !important;
 }
 
 p {
@@ -38,7 +45,7 @@ h1,h2,h3,h4,h5,h6{font-weight: 600;}
 }
 
 .btn-org {
-  background: #ff5252 !important;
+  background: #fc4b03 !important;
   color: #fff !important;
   font-weight: 500;
   font-size: 16px;
@@ -75,7 +82,7 @@ body,
 #root {
   height: auto;
   min-height: 100%;
-  overflow-y: auto;
+ 
   /* ensure vertical scrolling is enabled */
 }
 

@@ -1,106 +1,67 @@
 import React from "react";
-import "./ProductItem.css";
-import { Link } from "react-router-dom";
-
 import Rating from "@mui/material/Rating";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 
-import { FaRegHeart } from "react-icons/fa";
-import { LuGitCompareArrows } from "react-icons/lu";
-import { MdAddShoppingCart, MdOutlineZoomOutMap,MdOutlineShoppingCart } from "react-icons/md";
+const FALLBACK_IMAGE =
+  "https://via.placeholder.com/400x400?text=No+Image";
 
-const ProductItem = () => {
+const ProductItem = ({ product }) => {
+  if (!product) return null;
+
+  const mainImage =
+    product?.images && product.images.length > 0
+      ? product.images[0]
+      : FALLBACK_IMAGE;
+
   return (
-    <div className="group !mb-4 productItem rounded-md overflow-hidden border-2 border-gray-200 hover:shadow-lg transition-shadow duration-300 hover:bg-stone-200">
-      {/* Image Section */}
-      <div className="imgWrapper w-full  overflow-hidden rounded-b-md relative">
-        <Link to="/">
-          <div className="img h-[175px]  lg:h-[220px] overflow-hidden">
-            <img
-              src="https://rukminim2.flixcart.com/image/612/612/xif0q/ethnic-set/f/x/w/s-ma-lamba-creations-original-imahfwu3ux5jf78x.jpeg?q=70"
-              alt="Product"
-              className="w-full h-fit object-cover"
-            />
-            <img
-              src="https://rukminim2.flixcart.com/image/612/612/xif0q/ethnic-set/a/7/v/s-ma-lamba-creations-original-imahfwu3hwqhtpma.jpeg?q=70"
-              alt="Product"
-              className="w-full h-fit absolute top-0 left-0 object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            />
-          </div>
-        </Link>
-
-        {/* Discount */}
-        <span className="discount absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-lg">
-          10% OFF
-        </span>
-
-        {/* Hover Actions */}
-        <div
-          className="actions absolute top-[-20px] right-[5px] z-50
-          flex items-center gap-2 flex-col w-[50px]
-          opacity-0 transition-all duration-300
-          group-hover:top-[15px] group-hover:opacity-100"
-        >
-          {/* Zoom */}
-          <Tooltip title="Quick View" placement="left" arrow>
-            <Button className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white hover:!bg-orange-400">
-              <MdOutlineZoomOutMap className="text-[18px] text-black hover:text-white" />
-            </Button>
-          </Tooltip>
-
-          {/* Wishlist */}
-          <Tooltip title="Add to Wishlist" placement="left" arrow>
-            <Button className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white hover:!bg-orange-400">
-              <FaRegHeart className="text-[18px] text-black hover:text-white" />
-            </Button>
-          </Tooltip>
-
-          {/* Compare */}
-          <Tooltip title="Compare" placement="left" arrow>
-            <Button className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white hover:!bg-orange-400">
-              <LuGitCompareArrows className="text-[18px] text-black hover:text-white" />
-            </Button>
-          </Tooltip>
-        </div>
+    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition  cursor-pointer">
+      {/* IMAGE */}
+      <div className="w-full h-[200px] overflow-hidden rounded-top-md bg-gray-100">
+        <img
+          src={mainImage}
+          alt={product.name}
+          loading="lazy"
+          onError={(e) => {
+            e.target.src = FALLBACK_IMAGE;
+          }}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
       </div>
 
-      {/* Info Section */}
-      <div className="info !p-3 !py-6 ">
-        <h6 className="text-[13px] !font-[400]">
-          <Link to="/" className="link transition-all">
-            Cartify
-          </Link>
-        </h6>
-
-        <h3 className="text-[12px] lg:text-[13px] title mt-1 font-[500] mb-1 text-[#000]">
-          <Link to="/" className="link transition-all">
-           
-           {"Real Diamond Jewellery Gold Diamond Ring".length > 20 ? `${"Real Diamond Jewellery Gold Diamond Ring".slice(0, 20)}...` : "Real Diamond Jewellery Gold Diamond Ring"} 
-          </Link>
+      {/* INFO */}
+      <div className="mt-3 space-y-1 p-3">
+        <h3 className="text-sm font-medium line-clamp-2">
+          {product.name}
         </h3>
 
-        <Rating name="rating" defaultValue={4} size="small" readOnly />
+        <p className="text-xs text-gray-500">
+          {product.brand}
+        </p>
 
-        <div className="price !mt-2 flex items-center gap-2">
-          <span className=" text-[12px] lg:text-[14px] font-[500] text-orange-600">₹4,999</span>
-          <span className="oldPrice  text-[12px] lg:text-[14px]  text-gray-500 line-through ml-2">
-            ₹9,999
+        <div className="flex items-center gap-1">
+          <Rating
+            value={Number(product.rating)}
+            precision={0.5}
+            size="small"
+            readOnly
+          />
+          <span className="text-xs text-gray-400">
+            ({product.reviewsCount})
+          </span>
+        </div>
+
+        {/* PRICE */}
+        <div className="flex items-center gap-2">
+          <span className="text-orange-600 font-semibold">
+            ₹{product.pricing?.price}
+          </span>
+          <span className="text-xs text-gray-400 line-through">
+            ₹{product.pricing?.oldPrice}
+          </span>
+          <span className="text-xs text-green-600">
+            {product.pricing?.discountPercent}% off
           </span>
         </div>
       </div>
-
-<div className="px-3 pb-3">
-  <Button
-    size="small"
-    className="btn-org addToCartBtn btn-border w-full flex gap-2 
-               !text-xs sm:!text-sm lg:!text-md"
-  >
-    <MdOutlineShoppingCart className="text-[15px] sm:text-[16px] lg:text-[18px]" />
-    View
-  </Button>
-</div>
-
     </div>
   );
 };

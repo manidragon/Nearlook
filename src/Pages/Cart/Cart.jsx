@@ -14,9 +14,9 @@ import Cartitems from "./Cartitems";
 const CartPage = () => {
 
   return (
-    <section className="section py-10 pb-10">
-      <div className="container w-[80%] max-w-[80%] flex gap-5">
-        <div className="leftPart w-[75%]">
+    <section className="section py-4 lg:py-8 pb-10">
+      <div className="container w-[80%] max-w-[80%] flex gap-5 flex-col lg:flex-row">
+        <div className="leftPart w-full lg:w-[75%]">
           <div className="shadow-md rounded-md bg-white">
             <div className="py-2 px-3 border-b border-[rgba(0,0,0,0.1)]">
               <h2 className="text-[15px] font-[600] text-black">Your Cart</h2>
@@ -37,7 +37,7 @@ const CartPage = () => {
           </div>
         </div>
 
-        <div className="rightPart w-[30%]">
+        <div className="rightPart  w-full  lg:w-[30%]">
           <div className="shadow-md rounded-md bg-white p-5">
             {/* Title */}
             <h3 className="text-[16px] font-[600] mb-3">Cart Totals</h3>
@@ -77,7 +77,7 @@ const CartPage = () => {
             {/* Checkout Button */}
             <Link to="/checkout">
             <Button className="btn-org btn-lg w-full flex gap-2">
-              <BsFillBagCheckFill className="text-[20px]" /> Checkout
+              <BsFillBagCheckFill className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] " /> Checkout
               </Button>
               </Link>
           </div>

@@ -12,7 +12,7 @@ const MyListItems = (props) => {
 
   return (
     <div className="cartItem w-full p-3 flex items-center gap-4 pb-5 border-b border-[rgba(0,0,0,0.1)]">
-      <div className="img w-[15%] rounded-md overflow-hidden">
+      <div className="img w-[30%] sm:w-[15%] h-[150px] rounded-md overflow-hidden">
         <Link to="/product/7845" className="group">
           <img
             src="https://api.spicezgold.com/download/file_1734690981297_011618e4-4682-4123-be80-1fb7737d34ad1714702040213RARERABBITMenComfortOpaqueCasualShirt1.jpg"
@@ -22,14 +22,14 @@ const MyListItems = (props) => {
         </Link>
       </div>
 
-      <div className="info w-[85%] relative">
+      <div className="info w-full md:w-[85%] relative">
         <IoCloseSharp
           className="cursor-pointer absolute top-[0px] right-[0px] text-
                    [22px] link transition-all"
         />
         <span className="text-[13px]">Rare Rabbit</span>
 
-        <h3 className="text-[15px] font-[600] text-black">
+        <h3 className="text-[13px] lg:text-[15px] font-[600] text-black">
           <Link
             to="/product/7845"
             className="text-gray-800 hover:text-red-500 transition"

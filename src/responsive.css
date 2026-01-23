@@ -3,8 +3,12 @@
 @layer utilities {
   @media (min-width: 320px) and (max-width: 992px) {
     html,body {
-      overflow-x: hidden !important ;
+      /* overflow-x: hidden !important ; */
     }
+    main {
+      overflow-x: hidden !important;
+    }
+
 
     .btn-sm{
       padding: 3px 10px !important;
@@ -31,6 +35,7 @@
     .navigation ul{
       white-space: nowrap;
       overflow-y: hidden;
+      overflow-x: scroll !important;
       display: block !important;
     }
      .navigation ul ::-webkit-scrollbar{
@@ -90,9 +95,15 @@
       font-size: 10px !important;
     }
 
-    .productSlider .swiper,.blogSection .swiper{
+    /* .productSlider .swiper,.blogSection .swiper{
       overflow: hidden !important;
-    }
+    } */
+    .productSlider{
+  overflow: hidden;
+}
+.productSlider .swiper{
+  overflow: visible;
+}
     
     .resBannerSlider{
       /* white-space: nowrap; */
@@ -148,7 +159,19 @@
      display: none !important;
   
     }
+
+    .cartPanel .MuiPaper-root{
+      width: 300px !important;
+      max-width: 100% !important;
+    }
    }
 
 
+}
+
+@media screen and(min-width: 575px) and (max-width: 767px) {
+      .cartPanel .MuiPaper-root{
+      width: 400px !important;
+      max-width: 100% !important;
+    }
 }
