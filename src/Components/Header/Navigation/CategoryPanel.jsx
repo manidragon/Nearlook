@@ -47,11 +47,20 @@ const context = useContext(MyContext);
       </div>
 
     <CategoryCollapse/>
-{context?.windowWidth < 992 && 
+{context?.windowWidth < 992 && context?.isLogin === false &&
 <Link to="/login" className="!p-3 block" onClick={ () =>{props.setIsOpenCatPanel(false);
    props.propssetIsOpenCatPanel(false);}  }>
  
       <Button className="btn-org w-full">Login</Button>
+    </Link>
+}
+
+
+{context?.windowWidth < 992 && context?.isLogin === true &&
+<Link to="/login" className="!p-3 block" onClick={ () =>{props.setIsOpenCatPanel(false);
+   props.propssetIsOpenCatPanel(false);}  }>
+ 
+      <Button className="btn-org w-full">Logout</Button>
     </Link>
 }
     </Box>

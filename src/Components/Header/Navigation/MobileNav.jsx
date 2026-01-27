@@ -30,7 +30,7 @@ const MobileNav = () => {
   }
     return (
         <div className='mobileNav !bg-white p-1 w-full flex items-center justify-between  fixed bottom-0 left-0 z-[51] gap-0'>
-            <NavLink to={'/'} exact ={true}activeClassName='isActive'>
+            <NavLink to={'/'} exact ={true} activeClassName='isActive'>
             <Button className='flex-col !w-[40px] !capitalize !text-gray-700'>  
                 <IoHomeOutline size={18}/> <span className='text-[12px]'>Home</span>
                  </Button>
@@ -43,14 +43,14 @@ const MobileNav = () => {
                 }
                
           
-                   <Button className='flex-col !w-[40px] !capitalize !text-gray-700'>  
+                   <Button className='flex-col !w-[40px] !capitalize !text-gray-700' onClick={()=>context?.setOpenSearchPanel(true)}>  
                 <IoSearch size={18}/> <span className='text-[12px]'>Search </span>
                  </Button>
                
               
 
          
-                 <NavLink to={'/my-list'} exact ={true}activeClassName='isActive'>
+                 <NavLink to={'/my-list'} exact ={true} activeClassName='isActive'>
                    <Button className='flex-col !w-[40px] !capitalize !text-gray-700'>  
                 <LuHeart size={18}/> <span className='text-[12px]'>Wishlist</span>
                  </Button>

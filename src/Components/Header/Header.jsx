@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy, memo, useContext } from "react";
+import React, { useState, Suspense, lazy, memo, useContext,useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import Badge from "@mui/material/Badge";
@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import Navigation from "./Navigation/navigation.jsx";
 import { MyContext } from "../../App";
-
+import { FaArrowLeft } from "react-icons/fa6";
 // icons
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoGitCompareOutline } from "react-icons/io5";
@@ -23,6 +23,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { HiOutlineMenu } from "react-icons/hi";
 import LocationTrigger from "../Location/LocationTrigger";
 import LocationModal from "../Location/LocationModal";
+import { IoIosSearch, IoIosArrowBack } from "react-icons/io";
 
 // lazy search
 const Search = lazy(() => import("../Search/Search.jsx"));
@@ -65,13 +66,16 @@ const Header = () => {
   const context = useContext(MyContext);
     const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
 
-  
+  const hideForMobileSearch =
+  context.openSearchPanel && context.windowWidth < 992;
+
 
       const [showModal, setShowModal] = useState(false);
 const [address, setAddress] = useState(() => {
   const stored = localStorage.getItem("delivery_location");
   return stored ? JSON.parse(stored) : null;
 });
+
    React.useEffect(() => {
     if (address) {
       localStorage.setItem("delivery_location", JSON.stringify(address));
@@ -89,11 +93,23 @@ const [address, setAddress] = useState(() => {
   const handleAccountClose = () => {
     setAnchorEl(null);
   };
+  useEffect(() => {
+  if (context.openSearchPanel && context.windowWidth < 992) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
 
-  return (
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [context.openSearchPanel, context.windowWidth]);
+
+
+  return (<>
     <header className="bg-white w-full sticky top-0 z-[999] shadow-lg overflow-hidden ">
       {/* TOP STRIP */}
-      <div className="py-1 border-y border-gray-200">
+      <div className=" hidden  py-1 border-y border-gray-200">
         <div className="container ">
           <div className="flex justify-between items-center">
             <div className="col1 w-[50%] hidden lg:block">
@@ -117,16 +133,42 @@ const [address, setAddress] = useState(() => {
       {/* MAIN HEADER */}
       <div className="header border-b-[1px] border-gray-250 py-2 lg:py-4 ">
         <div className="container flex items-center justify-between">
-          {context.windowWidth < 992 &&
-          <Button onClick={() => setIsOpenCatPanel(true)} className="!w-[35px] !min-w-[35px] !h-[35px] rounded-full !text-gray-800"> <HiOutlineMenu  size={22}/>
-          </Button>}
+{context.windowWidth < 992 && (
+  hideForMobileSearch ? (
+    <Button
+      onClick={() => {
+        context.setOpenSearchPanel(false);
+        context.setSearchQuery("");
+      }}
+      className="!w-[35px] !min-w-[35px] !h-[35px] rounded-full !text-gray-800"
+    >
+      <FaArrowLeft  size={22}/>
+    </Button>
+  ) : (
+    <Button
+      onClick={() => setIsOpenCatPanel(true)}
+      className="!w-[35px] !min-w-[35px] !h-[35px] rounded-full !text-gray-800"
+    >
+      <HiOutlineMenu size={22} />
+    </Button>
+  )
+)}
+
           
           {/* LOGO */}
-          <div className=" col1 w-[40%] lg:w-[13%]  flex justify-center">
-            <Link to="/">
-              <img src="/logo.png" alt="logo" style={{ width: 90 }} />
-            </Link>
-          </div>{
+{!hideForMobileSearch && (
+  <div className="col1 w-[40%] lg:w-[13%] flex justify-center">
+    <Link to="/">
+      <img src="/logo.png" alt="logo" style={{ width: 90 }} />
+    </Link>
+  </div>
+)}
+
+          
+          
+          
+          
+          {
             context.windowWidth >= 992 &&            <div className=" col1 w-[40%] lg:w-[20%]  flex justify-center">
             <Link to="/">
                    <LocationTrigger
@@ -147,13 +189,25 @@ const [address, setAddress] = useState(() => {
 
 
           {/* SEARCH */}
-          <div className=" col2 fixed top-0 left-0 w-full h-full lg:w-[45%] lg:static p-2 lg:p-0 z-50 hidden lg:block">
+<div
+  className={`col2 w-full lg:flex lg:justify-center lg:w-[45%] p-2 lg:p-0
+  ${context.windowWidth < 992
+    ? context.openSearchPanel
+      ? "block"
+      : "hidden"
+    : "block"
+  }`}
+>
+
+
             <Suspense fallback={null}>
               <Search />
             </Suspense>
           </div>
 
           {/* RIGHT */}
+
+          {!hideForMobileSearch && (
           <div className="col3 w-10% lg:w-[30%] flex items-center pl-7">
             <ul className="flex items-center justify-end gap-0 lg:gap-3 ">
               {!context.isLogin ? (
@@ -290,12 +344,106 @@ const [address, setAddress] = useState(() => {
                 <MdOutlineShoppingCart size={22} />
               </IconWithBadge>
             </ul>
-          </div>
+          </div>)}
         </div>
       </div>
 
       <Navigation isOpenCatPanel ={isOpenCatPanel} setIsOpenCatPanel={setIsOpenCatPanel}/>
     </header>
+    {/* MOBILE SEARCH BACKDROP PANEL */}
+{context.openSearchPanel && context.windowWidth < 992 && (
+  <div
+    className="fixed left-0 top-[69px] w-full h-[calc(100vh-69px)] bg-white z-[9998] animate-slideDown overflow-y-auto"
+    onClick={() => context.setOpenSearchPanel(false)}
+  >
+    <div
+      className="p-4"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      {/* EMPTY INPUT → DISCOVER MORE */}
+      {context.searchQuery.trim() === "" && (
+        <>
+          <p className="text-[14px] font-[600] text-gray-600 mb-3">
+            Discover More
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {[
+              "Mobiles",
+              "Shoes",
+              "T-Shirts",
+              "Laptops",
+              "Watches",
+              "TV",
+              "Headphones",
+              "Bluetooth",
+              "Fridge",
+              "Bedsheet",
+              "Water Bottle"
+            ].map((item) => (
+              <button
+                key={item}
+                className="px-3 py-1.5 border border-gray-300 rounded-md text-[13px] text-blue-600 bg-white hover:bg-gray-100"
+                onClick={() => {
+                  context.setSearchQuery(item);
+                }}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* TYPING → TRENDING / SUGGESTIONS */}
+      {context.searchQuery.trim() !== "" && (
+        <>
+          <p className="text-[14px] font-[600] text-gray-600 mb-2">
+            Trending Searches
+          </p>
+
+          <div className="space-y-3">
+            {[
+              "tresemme shampoo",
+              "travel bag",
+              "trolley bag",
+              "trimmer men",
+              "t4 5g",
+              "tru hair wax"
+            ]
+              .filter((item) =>
+                item
+                  .toLowerCase()
+                  .includes(context.searchQuery.toLowerCase())
+              )
+              .map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center justify-between px-2 py-2 hover:bg-gray-100 rounded cursor-pointer"
+                  onClick={() => {
+                    context.setSearchQuery(item);
+                    context.setOpenSearchPanel(false);
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-500"><IoIosSearch size={16} /></span>
+                    <span className="text-[14px]">{item}</span>
+                  </div>
+                  <span className="text-gray-400">↗</span>
+                </div>
+              ))}
+          </div>
+        </>
+      )}
+
+    </div>
+  </div>
+)}
+
+
+
+    </>
   );
 };
 

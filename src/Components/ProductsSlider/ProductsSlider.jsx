@@ -49,12 +49,16 @@ import { PRODUCTS } from "../../data/products";
           }}
                     className="mySwiper"
                   >
-             {PRODUCTS.map((product) => (
-  <SwiperSlide key={product.id}>
-    <ProductItem product={product} />
+{PRODUCTS.map((product) => (
+  <SwiperSlide
+    key={product.id}
+    className="!h-auto flex"
+  >
+    <div className="w-full h-full flex">
+      <ProductItem product={product} />
+    </div>
   </SwiperSlide>
-))}
-            </Swiper>
+))}       </Swiper>
           
       </div> 
   );

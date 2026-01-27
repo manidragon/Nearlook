@@ -18,6 +18,9 @@ import MyList from "./Pages/MyList/MyList.jsx";
 import Orders from "./Pages/Orders/Orders.jsx";
 import  ReviewsPage  from "./Pages/ProductDetails/ReviewsPage.jsx";
 import OrderDetails from "./Pages/Orders/OrderDetails.jsx";
+import ManageAddress from "./Pages/MyAccount/manageAddress.jsx";
+import OrderSuccess from "./Pages/Orders/OrderSuccess";
+import OrderFailed from "./Pages/Orders/OrderFailed";
 
 
 // ✅ CREATE & EXPORT CONTEXT 
@@ -29,6 +32,10 @@ function App() {
  const[windowWidth, setWindowWidth] = useState(window.innerWidth);
  const [openFilter,setOpenFilter]=useState(false);
  const[isFilterBtnShow,setIsFilterBtnShow]=useState(false);
+
+ const [openSearchPanel,setOpenSearchPanel]=useState(false);
+ const [searchQuery, setSearchQuery] = useState("");
+
 
  useEffect(()=>{
    const handleResize = ()=>{
@@ -57,8 +64,13 @@ function App() {
     setOpenFilter,
     openFilter,
     setIsFilterBtnShow,
-    isFilterBtnShow
+    isFilterBtnShow,
+    openSearchPanel,
+    setOpenSearchPanel,
+   searchQuery,
+  setSearchQuery
   };
+  
 
   return (
     <MyContext.Provider value={values}>
@@ -78,6 +90,11 @@ function App() {
           <Route path="/my-orders" element={<Orders />} />
            <Route path="/my-orders/:orderId" element={<OrderDetails />} />
           <Route path="/product/:id/reviews" element={<ReviewsPage />} />
+           <Route path="/my-Adresses" element={<ManageAddress />} />
+          
+<Route path="/order-success/:orderId" element={<OrderSuccess />} />
+<Route path="/order-failed" element={<OrderFailed />} />
+
         </Routes>
 </main>
 

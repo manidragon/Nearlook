@@ -9,11 +9,18 @@ const HomeSlider = () => {
   const context = useContext(MyContext);
 
   const banners = [
-    "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/a64908ba9bf2fe36.jpg?q=80",
-    "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/1338bd4fc60390d8.jpg?q=80",
-    "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/6827264f05a3ddf7.jpeg?q=80",
-    "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/e94a135f02381d3a.jpg?q=80",
-    "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/f3a92f755ffe0d43.jpeg?q=80",
+    "/mainbanner1.webp",
+    "/mainbanner2.webp",
+    "/mainbanner3.webp",
+    "/mainbanner4.webp",
+    "/mainbanner1.webp",
+  ];
+
+    const bannerslg = [
+    "	https://rukminim1.flixcart.com/fk-p-flap/480/80/image/c26c4fa884f42107.jpg?q=80",
+    "	https://rukminim1.flixcart.com/fk-p-flap/480/80/image/1f9c9ad24c2bc37b.jpg?q=80",
+    "	https://rukminim1.flixcart.com/fk-p-flap/480/80/image/1338bd4fc60390d8.jpg?q=80",
+   
   ];
 
   return (
@@ -35,7 +42,7 @@ const HomeSlider = () => {
                 className="
                   relative
                   w-full
-                  h-[180px] sm:h-[240px] md:h-[300px] lg:h-[340px]
+                  h-[180px] sm:h-[240px] md:h-[300px] lg:h-[400px]
                   rounded-[10px]
                   overflow-hidden
                 "

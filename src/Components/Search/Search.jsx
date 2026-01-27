@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { IoIosSearch } from "react-icons/io";
 import { createPortal } from "react-dom";
+import { MyContext } from "../../App";
 
 const trendingSearches = [
   "iPhone 15",
@@ -13,7 +14,7 @@ const trendingSearches = [
 ];
 
 const Search = () => {
-  const [query, setQuery] = useState("");
+  const { searchQuery, setSearchQuery } = useContext(MyContext);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -68,17 +69,16 @@ useEffect(() => {
 
   return (
     <>
-      <StyledWrapper ref={inputRef}>
-        <div className="searchBox">
-          <input
-            className="searchInput"
-            type="text"
-            name="search"
-            placeholder="Search products"
-            value={query}
-            onFocus={() => setShowDropdown(true)}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+      <StyledWrapper ref={inputRef} className="">
+        <div className="searchBox ">
+<input
+  className="searchInput"
+  type="text"
+  placeholder="Search products"
+  value={searchQuery}
+  onFocus={() => setShowDropdown(true)}
+  onChange={(e) => setSearchQuery(e.target.value)}
+/>
 
           <button className="searchButton" type="button">
             <IoIosSearch size={20} />
@@ -86,9 +86,7 @@ useEffect(() => {
         </div>
       </StyledWrapper>
 
-      {showDropdown &&
-        rect &&
-        createPortal(
+{showDropdown && rect && window.innerWidth >= 992 && createPortal(
           <DropdownContainer
       ref={dropdownRef}
       style={{
@@ -96,16 +94,17 @@ useEffect(() => {
         left: dropdownPos.left,
         width: dropdownPos.width,
       }}
+      className="bg-white"
           >
             <p className="title">Trending Searches</p>
             {trendingSearches
-              .filter((item) =>
-                item.toLowerCase().includes(query.toLowerCase())
-              )
+           .filter((item) =>
+  item.toLowerCase().includes(searchQuery.toLowerCase())
+)
               .map((item) => (
                 <div
                   key={item}
-                  className="dropdownItem"
+                  className="dropdownItem "
                   onClick={() => handleSelect(item)}
                 >
                   <IoIosSearch size={16} />
@@ -123,6 +122,13 @@ export default Search;
 
 const StyledWrapper = styled.div`
   position: relative;
+  width: 100%;
+  max-width: 520px; /* Desktop default */
+  margin: 0 auto;
+
+  @media (max-width: 992px) {
+    max-width: 100%;
+  }
 
   .searchBox {
     display: flex;
@@ -130,6 +136,7 @@ const StyledWrapper = styled.div`
     background: #ebe9e9;
     border-radius: 50px;
     position: relative;
+    width: 100%;
   }
 
   .searchInput {
@@ -138,37 +145,26 @@ const StyledWrapper = styled.div`
     outline: none;
     color: #2f3640;
     font-size: 15px;
-    padding: 14px 40px 14px 16px;
+    padding: 12px 44px 12px 16px;
     width: 100%;
   }
 
   .searchButton {
     color: white;
     position: absolute;
-    right: 8px;
-    width: 40px;
-    height: 40px;
+    right: 6px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: linear-gradient(90deg, #fc4700ff 0%, #ca6238ff 100%);
     border: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  button:hover {
-    color: #fff;
-    background-color: #1a1a1a;
-    box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
-    transform: translateY(-3px);
-  }
-
-  button:active {
-    box-shadow: none;
-    transform: translateY(0);
+    transition: all 0.2s ease;
   }
 `;
+
 
 const DropdownContainer = styled.div`
   position: fixed;

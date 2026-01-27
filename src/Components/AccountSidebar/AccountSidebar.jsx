@@ -84,6 +84,18 @@ const AccountSidebar  = () => {
                       </Button>
                     </NavLink>
                   </li>
+
+                    <li className="w-full">
+                    <NavLink
+                      to="/my-Adresses"
+                      exact={true}
+                      activeClassName="isActive"
+                    >
+                      <Button className="w-full !text-left  !py-2 !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
+                        <IoBagCheckOutline className="text-[17px]" /> manage adresses
+                      </Button>
+                    </NavLink>
+                  </li>
     
                   <li className="w-full">
                     <Button className="w-full !text-left !py-2  !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">

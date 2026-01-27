@@ -263,13 +263,13 @@ export const PRODUCTS = [
   pricing: { price: 3499, oldPrice: 6999, discountPercent: 50 },
   stock: 70,
   seller: { name: "TECHZONE", rating: 4.6, returnPolicy: "10 Days Return" },
-  images: [
-    "https://picsum.photos/id/1091/800/800",
-    "https://picsum.photos/id/1092/800/800",
-    "https://picsum.photos/id/1093/800/800",
-    "https://picsum.photos/id/1094/800/800",
-    "https://picsum.photos/id/1095/800/800",
-  ],
+images: [
+  "https://placehold.co/800x800/png?text=Smart+Watch+Front",
+  "https://placehold.co/800x800/png?text=Smart+Watch+Side",
+  "https://placehold.co/800x800/png?text=Smart+Watch+Back",
+  "https://placehold.co/800x800/png?text=Fitness+Mode",
+  "https://placehold.co/800x800/png?text=Charging+Dock",
+],
   colors: [
     { name: "Black", imageIndex: 0 },
     { name: "Silver", imageIndex: 1 },
@@ -295,13 +295,14 @@ export const PRODUCTS = [
   pricing: { price: 1599, oldPrice: 2999, discountPercent: 47 },
   stock: 95,
   seller: { name: "FOOTMART", rating: 4.3, returnPolicy: "7 Days Return" },
-  images: [
-    "https://picsum.photos/id/1101/800/800",
-    "https://picsum.photos/id/1102/800/800",
-    "https://picsum.photos/id/1103/800/800",
-    "https://picsum.photos/id/1104/800/800",
-    "https://picsum.photos/id/1105/800/800",
-  ],
+images: [
+  "https://placehold.co/800x800/png?text=Women's+Sandals+Front",
+  "https://placehold.co/800x800/png?text=Women's+Sandals+Side",
+  "https://placehold.co/800x800/png?text=Women's+Sandals+Top",
+  "https://placehold.co/800x800/png?text=Women's+Sandals+Sole",
+  "https://placehold.co/800x800/png?text=Women's+Sandals+Pair",
+],
+
   colors: [
     { name: "Tan", imageIndex: 0 },
     { name: "Black", imageIndex: 1 },
@@ -327,13 +328,14 @@ export const PRODUCTS = [
   pricing: { price: 2499, oldPrice: 4999, discountPercent: 50 },
   stock: 60,
   seller: { name: "WINTERSTORE", rating: 4.5, returnPolicy: "10 Days Return" },
-  images: [
-    "https://picsum.photos/id/1111/800/800",
-    "https://picsum.photos/id/1112/800/800",
-    "https://picsum.photos/id/1113/800/800",
-    "https://picsum.photos/id/1114/800/800",
-    "https://picsum.photos/id/1115/800/800",
-  ],
+ images: [
+  "https://placehold.co/800x800/png?text=Winter+Hoodie+Front",
+  "https://placehold.co/800x800/png?text=Winter+Hoodie+Back",
+  "https://placehold.co/800x800/png?text=Winter+Hoodie+Side",
+  "https://placehold.co/800x800/png?text=Hood+Detail",
+  "https://placehold.co/800x800/png?text=Fabric+Texture",
+],
+
   colors: [
     { name: "Grey", imageIndex: 0 },
     { name: "Black", imageIndex: 1 },

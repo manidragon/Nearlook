@@ -11,7 +11,9 @@ import { LuGitCompareArrows } from "react-icons/lu";
 import TextField from "@mui/material/TextField";
 import ProductSlider from "../../Components/ProductsSlider/ProductsSlider.jsx";
 import { FaUndoAlt, FaMoneyBillWave, FaTruck, FaStar, FaLock } from "react-icons/fa";
-
+import { useParams } from "react-router-dom";
+import { PRODUCTS } from "../../data/products";
+import Tooltip from "@mui/material/Tooltip";
 import { Dialog, DialogContent, IconButton } from "@mui/material";
 import { MdLocalOffer } from "react-icons/md";
 import { Popover} from "@mui/material";
@@ -52,6 +54,11 @@ const [openSizeChart, setOpenSizeChart] = useState(false);
 const [showStickyBar, setShowStickyBar] = useState(true);
 const inactivityTimer = React.useRef(null);
 const [isHoveringBar, setIsHoveringBar] = useState(false);
+
+const { id } = useParams();
+
+const product = PRODUCTS.find((p) => p.id === id);
+
 
 
  const productBenefits = [
@@ -137,13 +144,27 @@ const kurtiColorVariants = [
       "https://api.spicezgold.com/download/file_1734529758900_fabflee-party-printed-women-s-top-women-tops-crepe-top-tops-for-women-tops-for-women-product-images-rvwdnv1ypj-0-202311010723.webp"
   }
 ];
-
+const orderId = "OD" + Date.now()
 
 const isSellerOpen = Boolean(sellerAnchorEl);
 
 
 
   const [activeTab, setActiveTab] = useState(0);
+  if (!product) {
+  return (
+    <div className="container py-20 text-center">
+      <h2 className="text-xl font-semibold">Product not found</h2>
+      <button
+        className="mt-4 px-6 py-2 bg-orange-600 text-white rounded"
+        onClick={() => navigate("/")}
+      >
+        Go Home
+      </button>
+    </div>
+  );
+}
+
   return (
     <>
       <div className="!py-2">
@@ -187,47 +208,67 @@ const isSellerOpen = Boolean(sellerAnchorEl);
         <div className=" container  ">
         <div className=" flex !gap-1 flex-col lg:flex-row  ">
           <div className="productZoomContainer w-full lg:w-[40%]">
-            <ProductZoom />
+            <ProductZoom images={product.images} />
           </div>
 
           <div className="productContent w-full lg:w-[60%] md:pr-10 md:pl-10">
             <h1 className="text-[18px] sm:text-[22px] font-[600] mb-2 ">
-              Chikankari Women Kurta
+             {product.name}
             </h1>
             <div className="flex items-start sm:items-center flex-col sm:flex-row md:flex-row lg:flex-row gap-3 justify-start">
               <span className="text-gray-400 text-[13px]">
                 Brand:
                 <span className="font-[500] text-black opacity-75">
-                  House of Chiankari
+                 {product.brand}
                 </span>
               </span>
-              <Rating name="rating" defaultValue={4} size="small" readOnly />
-              <span className="text-[13px] cursor-pointer">Review(5)</span>
+<Rating value={Number(product.rating)} size="small" readOnly />
+<span className="text-[13px] cursor-pointer">
+  Review({product.reviewsCount})
+</span>
             </div>
 
             {/* COLOR VARIANTS */}
 <div className="mt-5">
   <h4 className="text-sm font-medium mb-2">Color</h4>
 
-<div className="flex gap-3 overflow-x-auto no-scrollbar ">
-  {kurtiColorVariants.map((item, index) => (
-    <div
-      key={index}
-      className={`w-[60px] h-[80px] border rounded cursor-pointer
-        ${selectedColor === index ? "border-orange-600" : "border-gray-300"}
-      `}
-      onClick={() => setSelectedColor(index)}
-    >
-      <img
-        src={item.image}
-        alt={item.color}
-        className="w-full h-full object-cover"
-      />
-    </div>
-  ))}
+  <div className="flex gap-3 overflow-x-auto no-scrollbar">
+    {product.colors.map((item, index) => {
+      const imageSrc =
+        product.images?.[item.imageIndex] || product.images?.[0];
+
+      return (
+        <Tooltip
+          key={index}
+          title={item.name}
+          placement="top"
+          arrow
+        >
+          <div
+            className={`group relative w-[60px] h-[60px] lg:h-[80px] border rounded cursor-pointer
+              ${selectedColor === index
+                ? "border-orange-600"
+                : "border-gray-300 hover:border-gray-500"}
+            `}
+            onClick={() => setSelectedColor(index)}
+          >
+            <img
+              src={imageSrc}
+              alt={item.name}
+              className="w-full h-full object-cover rounded"
+            />
+
+            {/* SELECTED OVERLAY */}
+            {selectedColor === index && (
+              <div className="absolute inset-0 bg-orange-600/10 rounded border border-orange-600"></div>
+            )}
+          </div>
+        </Tooltip>
+      );
+    })}
+  </div>
 </div>
 
-</div>
 
 {/* SIZE VARIANTS */}
 <div className="mt-5">
@@ -242,7 +283,7 @@ const isSellerOpen = Boolean(sellerAnchorEl);
   </div>
 
 <div className="flex gap-3 flex-wrap">
-  {["S", "M", "L", "XL", "XXL"].map((size) => (
+{product.sizes.map((size) => (
     <button
       key={size}
       onClick={() => setSelectedSize(size)}
@@ -266,10 +307,10 @@ const isSellerOpen = Boolean(sellerAnchorEl);
             <div className="price mt-4 flex flex-col  sm:flex-row md:flex-row lg:flex-row items-start sm:items-center gap-4">
               <div className="flex items-center gap-2">
               <span className="oldPrice text-sm text-gray-500 line-through ">
-                ₹9,999
+               ₹{product.pricing.oldPrice}
               </span>
                <span className="text-[20px] font-[600] text-orange-600">
-                ₹4,999
+                ₹{product.pricing.price}
               </span>
               </div>
 
@@ -277,7 +318,7 @@ const isSellerOpen = Boolean(sellerAnchorEl);
               <span className="text-[14px]">
                 Available In Stock:
                 <span className="text-green-600 text-[14px] ml-1 font-bold">
-                  147 Items
+                 {product.stock} 
                 </span>
               </span>
               </div>
@@ -294,16 +335,16 @@ const isSellerOpen = Boolean(sellerAnchorEl);
     <span className="text-gray-600">Seller</span>
 
     <span className="text-orange-600 font-medium cursor-pointer">
-      LONGANITRADING
+      {product.seller.name}
     </span>
 
     <span className="bg-orange-600 text-white text-xs px-2 py-0.5 rounded">
-      4.5 ★
+    {product.seller.rating} ★
     </span>
   </div>
 
   <div className="flex items-center gap-2 mt-1 text-gray-600">
-    <span>• 10 days return policy</span>
+    <span>{product.seller.returnPolicy}</span>
     <span className="cursor-pointer text-gray-400">ⓘ</span>
   </div>
 
@@ -430,7 +471,7 @@ const isSellerOpen = Boolean(sellerAnchorEl);
                 <MdOutlineShoppingCart className="text-[20px]" />
                 Add to Cart
               </Button>
-              <Button className="btn-org bg-orange-600 flex gap-2 !rounded-3xl w-full" onClick={() => navigate("/checkout")}>
+              <Button className="btn-org bg-orange-600 flex gap-2 !rounded-3xl w-full" onClick={() => navigate(`/order-success/${orderId}`)}>
                 <MdOutlineShoppingCart className="text-[20px]" />
                 BUy Now
               </Button>
