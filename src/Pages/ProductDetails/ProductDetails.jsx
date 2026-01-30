@@ -462,16 +462,26 @@ const isSellerOpen = Boolean(sellerAnchorEl);
 </div>
 
 
-            <div className="flex flex-col lg:flex-row items-center gap-4 py-4">
-              <div className="qtyBoxWrapper w-full ">
-                <QtyBox />
-              </div>
+<div className="grid grid-cols-[auto_1fr] items-center gap-4 py-4 w-full">
+  
+  {/* Quantity Box — fixed width */}
+  <div className="qtyBoxWrapper w-[160px]">
+    <QtyBox />
+  </div>
 
-              <Button className="btn-org bg-orange-600 flex gap-2 !rounded-3xl w-full" onClick={() => navigate("/cart")}>
-                <MdOutlineShoppingCart className="text-[20px]" />
-                Add to Cart
-              </Button>
-              <Button className="btn-org bg-orange-600 flex gap-2 !rounded-3xl w-full" onClick={() => navigate(`/order-success/${orderId}`)}>
+  {/* Add to Cart — fills remaining space */}
+  <Button
+    className="btn-org bg-orange-600 flex items-center justify-center gap-2 !rounded-3xl w-full lg:w-[260px] "
+    onClick={() => navigate("/cart")}
+  >
+    <MdOutlineShoppingCart className="text-[20px]" />
+    Add to Cart
+  </Button>
+
+</div>
+
+            <div>
+        <Button className="btn-org bg-orange-600 flex gap-2 !rounded-3xl w-full lg:w-[435px]" onClick={() => navigate(`/order-success/${orderId}`)}>
                 <MdOutlineShoppingCart className="text-[20px]" />
                 BUy Now
               </Button>

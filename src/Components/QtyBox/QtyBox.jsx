@@ -34,8 +34,9 @@ export const QtyBox = ({
         onClick={() => updateQty(qty - 1)}
         disabled={qty <= min}
         className="
+        bg-orange-600 hover:!bg-black hover:text-orange-500
           flex items-center justify-center
-           p-3
+           p-3 text-[16px] text-center
           text-gray-600 hover:bg-gray-100 active:bg-gray-200
           disabled:opacity-40 disabled:cursor-not-allowed
           transition
@@ -63,7 +64,7 @@ export const QtyBox = ({
       <button
         onClick={() => updateQty(qty + 1)}
         disabled={qty >= max}
-        className="
+        className=" bg-orange-600 text-[16px] hover:!bg-black hover:text-orange-500  
           flex items-center justify-center
          p-3
           text-gray-600 hover:bg-gray-100 active:bg-gray-200

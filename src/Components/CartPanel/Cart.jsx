@@ -79,12 +79,12 @@ const CartPanel = () => {
 
           <div className="flex gap-3">
             <Link to="/cart" className="w-1/2">
-              <Button className="btn-org w-full">
+              <Button className="btn-org w-full" onClick={context.toggleCartPanel(false)}>
                 <span className="text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] ">View Cart</span> </Button>
             </Link>
 
             <Link to="/checkout" className="w-1/2">
-              <Button className="btn-org btn-border w-full"> <span className="text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] ">Checkout</span></Button>
+              <Button className="btn-org btn-border w-full" onClick={context.toggleCartPanel(false)}> <span className="text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px]  ">Checkout</span></Button>
             </Link>
           </div>
         </div>

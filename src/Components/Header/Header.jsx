@@ -8,7 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
+import { IoSearch } from "react-icons/io5";
 import Navigation from "./Navigation/navigation.jsx";
 import { MyContext } from "../../App";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -24,6 +24,7 @@ import { HiOutlineMenu } from "react-icons/hi";
 import LocationTrigger from "../Location/LocationTrigger";
 import LocationModal from "../Location/LocationModal";
 import { IoIosSearch, IoIosArrowBack } from "react-icons/io";
+import CategoryPage from "../MobileCatogery/CategoryPage.jsx";
 
 // lazy search
 const Search = lazy(() => import("../Search/Search.jsx"));
@@ -104,6 +105,18 @@ const [address, setAddress] = useState(() => {
     document.body.style.overflow = "";
   };
 }, [context.openSearchPanel, context.windowWidth]);
+
+useEffect(() => {
+  if (context.openCategory) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [context.openCategory]);
 
 
   return (<>
@@ -330,10 +343,13 @@ const [address, setAddress] = useState(() => {
               <IconWithBadge title="Compare" badgeContent={4}>
                 <IoGitCompareOutline size={22} />
               </IconWithBadge>} */}
-{context.windowWidth >992 &&  <IconWithBadge title="Wishlist" badgeContent={2}>
+    <Link to="/my-list" className="w-full block">         
+<IconWithBadge title="Wishlist" badgeContent={2}>
                 <GrFavorite size={20} />
               </IconWithBadge>
-              }
+
+              </Link> 
+    
              
 
               <IconWithBadge
@@ -437,6 +453,22 @@ const [address, setAddress] = useState(() => {
         </>
       )}
 
+    </div>
+  </div>
+)}
+
+{context.openCategory && context.windowWidth < 992 && (
+  <div
+    className="fixed left-0 top-0 w-full h-[calc(100vh-59px)] bg-white z-[9998] animate-slideDown overflow-y-auto"
+    onClick={() => context.setOpenCategory(false)}
+  >
+    <div
+      className=" "
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      {/* CATEGORY GRID */}
+<CategoryPage />
     </div>
   </div>
 )}

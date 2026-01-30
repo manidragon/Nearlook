@@ -23,7 +23,7 @@ const HomeCatSlider = () => {
           spaceBetween={12}
           navigation={context.windowWidth >= 992}
           modules={[Navigation,FreeMode]}
-          className="mySwiper"
+          className="mySwiper w-full"
           freeMode={true}
           breakpoints={{
             300:{

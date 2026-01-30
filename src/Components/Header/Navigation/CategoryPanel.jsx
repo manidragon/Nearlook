@@ -27,11 +27,11 @@ const context = useContext(MyContext);
     <Box sx={{ width: 250 }} role="presentation" className="categoryPanel">
 
 {context.windowWidth < 992 && (
-  <div className="p-3">
+  <div className="p-3 flex items-center justify-center">
     <img
-      src={localStorage.getItem("logo")}
+      src="./logo.png"
       alt="logo"
-      className="w-[150px]"
+      className="w-[80px] sm:w-[100px] "
     />
   </div>
 )}

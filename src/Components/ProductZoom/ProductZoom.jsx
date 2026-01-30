@@ -66,6 +66,8 @@ const productImages =
         }`} >
           <Swiper
            ref={zoomSliderBig}
+             loop={true}                 // 🔥 INFINITE LOOP
+  loopFillGroupWithBlank={true}
             autoplay={{
               delay: 2000,
               disableOnInteraction: false,

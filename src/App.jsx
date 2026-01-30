@@ -5,50 +5,48 @@ import Header from "./Components/Header/Header.jsx";
 import Footer from "./Components/Footer/Footer.jsx";
 import "./App.css";
 import "./responsive.css";
+
 import Home from "./Pages/Home/Home.jsx";
 import Cart from "./Pages/Cart/Cart.jsx";
 import Checkout from "./Pages/Checkout/Checkout.jsx";
 import Login from "./Pages/Home/Login/Login.jsx";
 import Register from "./Pages/Home/Register/Register.jsx";
-
 import ProductListing from "./Pages/ProductListing/ProductListing.jsx";
 import { ProductDetails } from "./Pages/ProductDetails/ProductDetails.jsx";
 import MyAccount from "./Pages/MyAccount/MyAccount.jsx";
 import MyList from "./Pages/MyList/MyList.jsx";
 import Orders from "./Pages/Orders/Orders.jsx";
-import  ReviewsPage  from "./Pages/ProductDetails/ReviewsPage.jsx";
+import ReviewsPage from "./Pages/ProductDetails/ReviewsPage.jsx";
 import OrderDetails from "./Pages/Orders/OrderDetails.jsx";
 import ManageAddress from "./Pages/MyAccount/manageAddress.jsx";
 import OrderSuccess from "./Pages/Orders/OrderSuccess";
 import OrderFailed from "./Pages/Orders/OrderFailed";
+import CategoryPage from "./Components/MobileCatogery/CategoryPage.jsx";
+
+// ✅ Correct path spelling
 
 
-// ✅ CREATE & EXPORT CONTEXT 
+// ✅ CREATE CONTEXT
 export const MyContext = createContext();
 
 function App() {
   const [openCartPanel, setOpenCartPanel] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
- const[windowWidth, setWindowWidth] = useState(window.innerWidth);
- const [openFilter,setOpenFilter]=useState(false);
- const[isFilterBtnShow,setIsFilterBtnShow]=useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [isFilterBtnShow, setIsFilterBtnShow] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+  const [openSearchPanel, setOpenSearchPanel] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
- const [openSearchPanel,setOpenSearchPanel]=useState(false);
- const [searchQuery, setSearchQuery] = useState("");
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
 
-
- useEffect(()=>{
-   const handleResize = ()=>{
-    setWindowWidth(window.innerWidth);
-
-   };
-
-   window.addEventListener("resize",handleResize);
-
-   return ()=>{
-    window.removeEventListener("resize",handleResize);
-   }
- },[])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleCartPanel = (newOpen) => () => {
     setOpenCartPanel(newOpen);
@@ -67,36 +65,39 @@ function App() {
     isFilterBtnShow,
     openSearchPanel,
     setOpenSearchPanel,
-   searchQuery,
-  setSearchQuery
+    searchQuery,
+    setSearchQuery,
+    openCategory,
+    setOpenCategory
   };
-  
 
   return (
     <MyContext.Provider value={values}>
       <BrowserRouter>
-        <Header  />
-<main  >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/productListing" element={<ProductListing />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/my-account" element={<MyAccount />} />
-          <Route path="/my-list" element={<MyList />} />
-          <Route path="/my-orders" element={<Orders />} />
-           <Route path="/my-orders/:orderId" element={<OrderDetails />} />
-          <Route path="/product/:id/reviews" element={<ReviewsPage />} />
-           <Route path="/my-Adresses" element={<ManageAddress />} />
-          
-<Route path="/order-success/:orderId" element={<OrderSuccess />} />
-<Route path="/order-failed" element={<OrderFailed />} />
+        <Header />
 
-        </Routes>
-</main>
+ 
+
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/productListing" element={<ProductListing />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/my-account" element={<MyAccount />} />
+            <Route path="/my-list" element={<MyList />} />
+            <Route path="/my-orders" element={<Orders />} />
+            <Route path="/my-orders/:orderId" element={<OrderDetails />} />
+            <Route path="/product/:id/reviews" element={<ReviewsPage />} />
+            <Route path="/my-Adresses" element={<ManageAddress />} />
+            <Route path="/order-success/:orderId" element={<OrderSuccess />} />
+            <Route path="/order-failed" element={<OrderFailed />} />
+            <Route path="/category" element={<CategoryPage />} />
+          </Routes>
+        </main>
 
         <Footer />
       </BrowserRouter>

@@ -42,7 +42,7 @@ const HomeSlider = () => {
                 className="
                   relative
                   w-full
-                  h-[180px] sm:h-[240px] md:h-[300px] lg:h-[400px]
+                  h-[180px] sm:h-[240px] md:h-[300px] lg:h-[510px]
                   rounded-[10px]
                   overflow-hidden
                 "
@@ -51,10 +51,18 @@ const HomeSlider = () => {
            
 
                 {/* Actual image (no crop) */}
-                <div
-                  className="absolute inset-0 bg-cover  bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${img})` }}
-                />
+<div
+  className="
+    absolute
+    inset-0
+    bg-center
+    bg-no-repeat
+
+    bg-cover
+    lg:bg-[length:100%_490px]
+  "
+  style={{ backgroundImage: `url(${img})` }}
+/>
               </div>
             </SwiperSlide>
           ))}
