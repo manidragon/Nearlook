@@ -12,7 +12,7 @@ import { MdOutlineZoomOutMap } from "react-icons/md";
 import { MdOutlineShoppingCart } from "react-icons/md";
 
 const FALLBACK_IMAGE =
-  "https://via.placeholder.com/400x400?text=No+Image";
+  "https://placehold.co/400x400/png?text=No+Image";
 
 const ProductItemListView = ({ product }) => {
   const navigate = useNavigate();

@@ -12,7 +12,7 @@ const OrderSuccess = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowDetails(true)
-    }, 2500) // animation duration
+    }, 2800) // animation duration
 
     return () => clearTimeout(timer)
   }, [])

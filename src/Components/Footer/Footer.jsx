@@ -53,17 +53,13 @@ const Footer = () => {
   watchSlidesProgress={true}
   spaceBetween={16}
   freeMode={true}
- 
-  loop={true}                 // 🔥 INFINITE LOOP
-  loopFillGroupWithBlank={true}
-
+  loop={true}
   modules={[FreeMode, Autoplay]}
   autoplay={{
     delay: 1500,
     disableOnInteraction: false,
     pauseOnMouseEnter: true,
   }}
-
   className="mySwiper !py-5"
   breakpoints={{
     0: { slidesPerView: 1 },
@@ -73,52 +69,50 @@ const Footer = () => {
     1280: { slidesPerView: 5 },
   }}
 >
+  {[
+    {
+      icon: <LiaShippingFastSolid />,
+      title: "Free Shipping",
+      desc: "For all Orders Over $100",
+    },
+    {
+      icon: <PiKeyReturnLight />,
+      title: "30 Days Returns",
+      desc: "For an Exchange Product",
+    },
+    {
+      icon: <BsWallet2 />,
+      title: "Secured Payment",
+      desc: "Payment Cards Accepted",
+    },
+    {
+      icon: <LiaGiftSolid />,
+      title: "Special Gifts",
+      desc: "Our First Product Order",
+    },
+    {
+      icon: <BiSupport />,
+      title: "Support 24/7",
+      desc: "Contact us Anytime",
+    },
+  ].map((item, index) => (
+    <SwiperSlide
+      key={`footer-slide-${item.title}-${index}`}
+      className="!h-auto"
+    >
+      <div className="flex flex-col items-center text-center group cursor-pointer">
+        <div className="text-8xl sm:text-4xl transition-all duration-300 group-hover:text-orange-500 group-hover:-translate-y-2">
+          {item.icon}
+        </div>
+        <h3 className="text-3xl sm:text-base font-semibold mt-3 text-white">
+          {item.title}
+        </h3>
+        <p className="text-xs sm:text-sm">{item.desc}</p>
+      </div>
+    </SwiperSlide>
+  ))}
+</Swiper>
 
-            {[
-              {
-                icon: <LiaShippingFastSolid />,
-                title: "Free Shipping",
-                desc: "For all Orders Over $100",
-              },
-              {
-                icon: <PiKeyReturnLight />,
-                title: "30 Days Returns",
-                desc: "For an Exchange Product",
-              },
-              {
-                icon: <BsWallet2 />,
-                title: "Secured Payment",
-                desc: "Payment Cards Accepted",
-              },
-              {
-                icon: <LiaGiftSolid />,
-                title: "Special Gifts",
-                desc: "Our First Product Order",
-              },
-              {
-                icon: <BiSupport />,
-                title: "Support 24/7",
-                desc: "Contact us Anytime",
-              },
-            ].map((item, index) => (
-             
-<SwiperSlide>
-  <div
-    key={index}
-    className="flex flex-col items-center text-center group cursor-pointer"
-  >
-    <div className="text-8xl sm:text-4xl transition-all duration-300 group-hover:text-orange-500 group-hover:-translate-y-2">
-      {item.icon}
-    </div>
-    <h3 className="text-3xl sm:text-base font-semibold mt-3 text-white">
-      {item.title}
-    </h3>
-    <p className="text-xs sm:text-sm">{item.desc}</p>
-  </div>
-</SwiperSlide>
-
-              
-            ))}</Swiper>
           </div>
           
 
